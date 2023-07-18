@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        let menus = ['Pizza Salami', 'Pizza Brokkoli', 'Pizza Normal'];
+        let prices = [8.00, 7.00, 6.00];
+        let amounts = [1, 2, 3];
+
+        function getValueFromInput(id) {
+            return document.getElementById(id).value;
+        }
+
+        function getMenuFromInput() {
+            let menu = document.getElementById('menu').value;
+
+            menu.trim();
+
+            if (menu == null || menu == "") {
+                alert("Bitte ein Menü eingeben");
+            }
+            else {
+                return menu;
+            }
+        }
+
+        function getPriceFromInput() {
+            let price = +getValueFromInput('price');
+
+            if (price == null || price == "") {
+                alert("Bitte einen Preis eingeben");
+            }
+            else {
+                return price;
+            }
+        }
+
+        function onAddMenu() {
+            if (getMenuIndex(getMenuFromInput()) == -1) {
+                menus.push(getMenuFromInput());
+                prices.push(getPriceFromInput());
+                amounts.push(1);
+            }
+            else{
+                let i = getMenuIndex(getMenuFromInput());
+                amounts[i]++;
+            }
+        }
+
+        function getMenuIndex(menu) {
+            return menus.indexOf(menu);
+        }
+    </script>
+</head>
+
+<body>
+    <input id="menu" minlength="1">
+    <input id="price" type="number" min="0" value="0">
+    <button onclick="onAddMenu()">Menü hinzufügen</button>
+
+</body>
+
+</html>
