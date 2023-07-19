@@ -1,0 +1,76 @@
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    margin: 0px;
+}
+
+.newNoteBox{
+    display: flex;
+    justify-content: center;
+}
+
+.trashcan{
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.trashcan:hover{
+    cursor: pointer;
+}
+
+.position-relative{
+    position: relative;
+}
+
+.layout{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-content: space-evenly;
+    flex-direction: column;
+    height: 150px;
+    width: 400px;
+}
+
+textarea{
+    resize: none;
+}
+
+.visuals{
+    box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 14%);
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+h1{
+    text-align: center;
+}
+
+h2{
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.margin-side{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.d-none{
+    display: none;
+}
+
+.delNoteSection-bg{
+    background-color: lightgray;
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
