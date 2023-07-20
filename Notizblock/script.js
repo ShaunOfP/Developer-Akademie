@@ -37,10 +37,10 @@ function render() {
 
 
 function renderDeleted(){
-    let deletedContent = document.getElementById('deletedNoteSection');
+    let deletedContent = document.getElementById('deletedSection');
 
     deletedContent.innerHTML = '';
-    deletedContent.innerHTML += `<h1>My Deleted Notes</h1>`;
+    deletedContent.innerHTML += `<h1>My Deleted Notes</h1><a href="javascript:hideDeletedNotes()"><img class="exitDeletedNotes" src="./img/exit.svg"</a>`;
 
     for (let i = 0; i < deletedTitles.length; i++){
         deletedContent.innerHTML +=`
@@ -134,4 +134,18 @@ function loadDeleted(){
 
 function showDeletedNotes(){
     document.getElementById('deletedSection').classList.remove('d-none');
+}
+
+
+function hideDeletedNotes(){
+    document.getElementById('deletedSection').classList.add('d-none');
+}
+
+
+function deletePerma(i){
+    deletedTitles.splice(i, 1);
+    deletedNotes.splice(i, 1);
+
+    renderDeleted();
+    saveDeleted();
 }

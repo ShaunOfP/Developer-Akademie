@@ -21,6 +21,7 @@ body{
 
 .trashcan:hover{
     cursor: pointer;
+    background-image: url("./img/darktrashcan.svg");
 }
 
 .position-relative{
@@ -73,4 +74,12 @@ h2{
     right: 0;
     bottom: 0;
     top: 0;
+}
+
+.exitDeletedNotes{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    height: 40px;
+    width: 40px;
 }
