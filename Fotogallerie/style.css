@@ -1,0 +1,58 @@
+.photoSection {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imgbox {
+    height: 150px;
+    margin: 10px;
+}
+
+.imgbox img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: all 300ms ease-in-out;
+}
+
+.imgbox img:hover{
+    box-shadow: 0 3px 8px black;
+    height: 102%;
+    width: 101%;
+}
+
+.selected-image{
+    height: 150px;
+    margin: 10px;
+}
+
+.selected-image img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.alignment{
+    display: flex;
+}
+
+.photoFocus-bg {
+    background-color: black;
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photoFocus {
+    height: 100vh;
+}
+
+.d-none{
+    display: none;
+}
