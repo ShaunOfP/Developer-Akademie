@@ -16,9 +16,7 @@
         }
 
         function getMenuFromInput() {
-            let menu = document.getElementById('menu').value;
-
-            menu.trim();
+            let menu = getValueFromInput('menu').trim();
 
             if (menu == null || menu == "") {
                 alert("Bitte ein Menü eingeben");
