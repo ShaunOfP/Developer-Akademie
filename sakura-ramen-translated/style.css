@@ -1,0 +1,334 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+}
+
+.first-container {
+    height: 100vh;
+    background-image: url("./img/bgr1.jpg");
+    background-size: cover;
+    background-position: bottom;
+}
+
+.german-btn{
+    margin-left: 5px;
+    background-image: url("./img/ger.png");
+    background-size: cover;
+    background-position: center;
+    height: 25px;
+    width: 45px;
+}
+
+.english-btn{
+    background-image: url("./img/eng.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 25px;
+    width: 45px;
+}
+
+.headline {
+    width: 100%;
+    height: 60vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.head {
+    font-family: 'Raleway', 'sans-serif';
+    font-weight: bold;
+    font-size: xxx-large;
+}
+
+.motto {
+    font-family: 'Raleway', 'sans-serif';
+    font-size: x-large;
+    font-weight: normal;
+}
+
+.menu {
+    left: 5vh;
+    top: 3vh;
+    right: 5vh;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.menu a:hover {
+    color: rgb(155, 155, 155);
+}
+
+.menu-addon {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.btn {
+    display: flex;
+    margin-left: 2.6vw;
+}
+
+.phone-img {
+    position: absolute;
+    margin-top: 0.4vh;
+    margin-left: 0.1vw;
+}
+
+.button-style {
+    font-family: 'Raleway', sans-serif;
+    background-color: rgb(255, 74, 74);
+    color: white;
+    border-radius: 5px;
+    border-color: white;
+    height: 36px;
+    width: 168px;
+}
+
+.button-style:hover {
+    background-color: rgb(255, 121, 121);
+    cursor: pointer;
+}
+
+.howtoorder {
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ab1800;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+.subheadline-font {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.food-icons {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: x-large;
+    padding-bottom: 3vh;
+    font-family: 'Economica', sans-serif;
+    font-weight: bold;
+}
+
+.third-container {
+    font-family: 'Economica', sans-serif;
+    background-image: url("img/background.jpg");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+th {
+    text-align: left;
+    color: black;
+}
+
+.food-size {
+    object-fit: contain;
+    object-position: left;
+    height: 25vh;
+    width: 30vw;
+}
+
+.miso-food-size {
+    object-fit: contain;
+    object-position: right;
+    height: 25vh;
+    width: 30vw;
+}
+
+.third-headline {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #ab1800;
+}
+
+.food-layout {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 6vh;
+}
+
+.food-table {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    font-size: xx-large;
+    font-weight: bold;
+    color: rgb(104, 104, 104);
+}
+
+.miso-food-table {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    font-size: xx-large;
+    font-weight: bold;
+    color: rgb(104, 104, 104);
+}
+
+.address {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.findusat {
+    color: #ab1800;
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+}
+
+.pointer-layout {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pointer {
+    padding-right: 10px;
+    height: 25px;
+    width: 20px;
+    object-fit: contain;
+}
+
+.place {
+    font-size: larger;
+    font-family: 'Raleway', sans-serif;
+}
+
+.map {
+    width: 100%;
+    height: 50vh;
+}
+
+.footer-layout {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.footer-saku {
+    height: 35px;
+    width: 200px;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.icon-size {
+    height: 45px;
+    width: 45px;
+    margin-left: 16px;
+}
+
+.mobile-display{
+    display: none;
+}
+
+@media(max-width: 750px) {
+    .menu-addon {
+        display: none;
+    }
+
+    .food-icons{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .font-align{
+        margin-bottom: 20px;
+    }
+
+    .icon-size{
+        height: 25px;
+        width: 25px;
+        padding: 5px;
+    }
+
+    .footer-saku{
+        padding: 10px;
+        height: 15px;
+        width: 100px;
+    }
+
+    .food-layout{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .food-size{
+        object-fit: contain;
+        height: 35vh;
+        width: 40vw;
+    }
+
+    .miso-food-size {
+        object-fit: contain;
+        height: 35vh;
+        width: 40vw;
+    }
+
+    .subheadline-font{
+        text-align: center;
+    }
+
+    .food-table{
+        align-items: center;
+    }
+
+    .miso-food-table {
+        align-items: center;        
+    }
+
+    .pc-display{
+        display: none;
+    }
+
+    .mobile-display{
+        display: contents;
+    }
+}
+
+@media(max-width: 770px) {
+    .headline {
+        text-align: center;
+    }
+}
