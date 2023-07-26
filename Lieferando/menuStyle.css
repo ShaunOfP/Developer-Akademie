@@ -1,0 +1,90 @@
+.menu-body-head{
+    background-color: #F8F5F2;
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.menu-body-head a{
+    text-decoration: none;
+    color: rgb(122, 122, 122);
+}
+
+.menu-body-head a:hover{
+    color: #FF8000;
+}
+
+.menu-body-head img{
+    height: 25px;
+    width: 25px;
+}
+
+.menu-body-middle{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.mbody-headline{
+    background-color: #F8F5F2;
+    height: 60px;
+    padding-left: 20px;
+    text-align: start;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.mbody-product{
+    padding-left: 20px;
+    text-align: start;
+}
+
+.mbody-product{
+    padding-left: 20px;
+    border: 1px solid lightgrey;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mbody-product h3{
+    margin-bottom: 5px;
+}
+
+.mbody-product p{
+    color: #FF8000;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.mbody-btn{
+    margin-top: 0;
+}
+
+.mbody-btn button{
+    border-radius: 0px;
+    border: 1px solid lightgrey;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border-right: 0;
+    border-top: 0;
+}
+
+.mbody-btn button:hover{
+    background-color: lightgrey;
+    transition: .2s;
+}
+
+.ion-icon{
+    color: rgb(53, 137, 255);
+}
+

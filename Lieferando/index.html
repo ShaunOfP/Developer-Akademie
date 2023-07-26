@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="format.css">
+    <link rel="stylesheet" href="headerStyle.css">
+    <link rel="stylesheet" href="cartStyle.css">
+    <link rel="stylesheet" href="menuHeadStyle.css">
+    <link rel="stylesheet" href="menuStyle.css">
+    <script src="script.js" async></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body onload="render()">
+    <header>
+        <div class="logo-div">
+            <img src="./img/logo.png">
+        </div>
+        <div class="header-address-layout">
+            <h2 class="header-address">Lilienstraße 3, Leipzig</h2>
+            <span class="header-address-underline"></span>
+        </div>
+        <div class="language-menu">
+            <div class="select-language">
+                <img src="./img/ger.png">
+            </div>
+            <nav>
+                <p>Menu</p>
+            </nav>
+        </div>
+    </header>
+
+    <section class="main">
+        <section class="menu-head">
+            <div class="menu-head-logo">
+                <img src="./img/restaurant-logo.png">
+            </div>
+
+            <div class="menu-head-image">
+                <img src="./img/food.jpg">
+            </div>
+
+            <div class="menu-head-layout">
+                <div class="menu-headline-left">
+                    <div class="menu-headline">
+                        <h2>Croccante Restaurant</h2>
+                    </div>
+                    <div class="menu-headline-rating">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span>(xy Bewertungen)</span>
+                    </div>
+                </div>
+
+                <div class="menu-headline-right">
+                    <div class="headline-icon">i</div>
+                    <div class="headline-icon heart">x</div>
+                </div>
+            </div>
+
+            <section class="menu-body">
+                <div class="menu-body-head">
+                    <a href="#"><img src="./img/lupe.png"></a>
+                    <a href="#">Beliebte Gerichte</a>
+                    <a href="#">Salate</a>
+                    <a href="#">Pizza</a>
+                    <a href="#">Pizzabrot</a>
+                    <a href="#">Pasta</a>
+                </div>
+
+                <div class="menu-body-middle">
+                    <div class="mbody-headline">
+                        <h3>Beliebte Gerichte</h3>
+                    </div>
+
+                    <div id="mbody-objects"></div>                    
+                </div>
+            </section>
+
+        </section>
+
+        <section class="cart">
+            <div class="cart-headline">
+                <p>Warenkorb</p>
+            </div>
+
+            <div class="seperator"></div>
+
+            <div class="cart-order" id="cart-order">
+                <!-- class="cart-order-layout" -->
+            </div>
+
+            <div class="seperator"></div>
+
+            <div class="cart-costs" id="cart-costs">
+                
+            </div>
+
+            <div class="seperator"></div>
+
+            <div class="cart-purchase" id="cart-purchase">
+                dsfsdfsdfsd
+                <button class="cart-purchase-btn" id="cart-purchase-btn">Bestellen</button>
+            </div>
+        </section>
+    </section>
+
+    <footer>
+    </footer>
+
+    <!-- For the AddButton -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!--  -->
+</body>
+
+</html>

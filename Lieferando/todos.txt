@@ -1,0 +1,20 @@
+header:
+-burgermenu
+-headermitte richtig ausrichten
+
+menuhead:
+-headline image
+-headline boxen icons
+-href links und lupe
+
+menubody:
+-ionicons farbwechsel
+-bilder als überschrift über pizza eine pizza etc
+
+allgemein:
+-responsive machen
+-sprache übersetzen
+
+einkaufswagen:
+-müllkorb
+-plus minus knopf
