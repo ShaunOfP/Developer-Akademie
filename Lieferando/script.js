@@ -66,7 +66,9 @@ let pasta = [
 ];
 
 
-let orders = [];
+let orderNames = [];
+let orderPrices = [];
+let orderAmount = [];
 
 
 function render() {
@@ -102,7 +104,7 @@ function render() {
                 <p>${pastaBox['price'].toFixed(2)}€</p>
             </div>
             <div class="mbody-btn">
-                <button onclick="addPasta(${i})"><ion-icon name="add-outline"></ion-icon></button>
+                <button onclick="addPastaToArray(${i})"><ion-icon name="add-outline"></ion-icon></button>
             </div>
         </div>
         `;
@@ -115,17 +117,40 @@ function addPizzaToArray(index){
     let pizzaPrice = pizza[index]['price'];
     let pizzaAmount = pizza[index]['amount'];
 
-    if (orders.includes(pizzaName)){
-        orders[index]['price'] = pizzaPrice * pizzaAmount;
-        orders[index]['amounts']++;
+    if (orderNames.includes(pizzaName)){
+        orderAmount[index]++;
+        orderPrices[index] = pizzaPrice * orderAmount[index];
     }
     else{
-        let newOrder = {
-            'name': pizzaName,
-            'price': +pizzaPrice,
-            'amount': +pizzaAmount
-        }
-        orders.push(newOrder);
+        let newName = pizzaName;
+        let newPrice = +pizzaPrice;
+        let newAmount = +pizzaAmount;
+        
+        orderNames.push(newName);
+        orderPrices.push(newPrice);
+        orderAmount.push(newAmount);
+    }
+    arrayToCart();
+}
+
+
+function addPastaToArray(index){
+    let pastaName = pasta[index]['name'];
+    let pastaPrice = pasta[index]['price'];
+    let pastaAmount = pasta[index]['amount'];
+
+    if (orderNames.includes(pastaName)){
+        orderAmount[index]++;
+        orderPrices[index] = pastaPrice * orderAmount[index];
+    }
+    else{
+        let newName = pastaName;
+        let newPrice = +pastaPrice;
+        let newAmount = +pastaAmount;
+        
+        orderNames.push(newName);
+        orderPrices.push(newPrice);
+        orderAmount.push(newAmount);
     }
     arrayToCart();
 }
@@ -136,17 +161,17 @@ function arrayToCart(){
 
     cart.innerHTML = "";
 
-    for(let i = 0; i < orders.length; i++){
+    for(let i = 0; i < orderNames.length; i++){
         cart.innerHTML += `
         <div class="cart-order-layout">
             <div>
-                ${orders[i]['amount']}
+                ${orderAmount[i]}
             </div>
             <div>
-                ${orders[i]['name']}
+                ${orderNames[i]}
             </div>
             <div>
-                ${orders[i]['price'].toFixed(2)}€
+                ${orderPrices[i].toFixed(2)}€
             </div>
         </div>
         `;
