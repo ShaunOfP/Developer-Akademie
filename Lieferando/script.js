@@ -71,6 +71,9 @@ let orderPrices = [];
 let orderAmount = [];
 
 
+orderValue();
+
+
 function render() {
     let menu = document.getElementById('mbody-objects');
 
@@ -112,20 +115,20 @@ function render() {
 }
 
 
-function addPizzaToArray(index){
+function addPizzaToArray(index) {
     let pizzaName = pizza[index]['name'];
     let pizzaPrice = pizza[index]['price'];
     let pizzaAmount = pizza[index]['amount'];
 
-    if (orderNames.includes(pizzaName)){
+    if (orderNames.includes(pizzaName)) {
         orderAmount[index]++;
         orderPrices[index] = pizzaPrice * orderAmount[index];
     }
-    else{
+    else {
         let newName = pizzaName;
         let newPrice = +pizzaPrice;
         let newAmount = +pizzaAmount;
-        
+
         orderNames.push(newName);
         orderPrices.push(newPrice);
         orderAmount.push(newAmount);
@@ -134,20 +137,20 @@ function addPizzaToArray(index){
 }
 
 
-function addPastaToArray(index){
+function addPastaToArray(index) {
     let pastaName = pasta[index]['name'];
     let pastaPrice = pasta[index]['price'];
     let pastaAmount = pasta[index]['amount'];
 
-    if (orderNames.includes(pastaName)){
+    if (orderNames.includes(pastaName)) {
         orderAmount[index]++;
         orderPrices[index] = pastaPrice * orderAmount[index];
     }
-    else{
+    else {
         let newName = pastaName;
         let newPrice = +pastaPrice;
         let newAmount = +pastaAmount;
-        
+
         orderNames.push(newName);
         orderPrices.push(newPrice);
         orderAmount.push(newAmount);
@@ -156,12 +159,12 @@ function addPastaToArray(index){
 }
 
 
-function arrayToCart(){
+function arrayToCart() {
     let cart = document.getElementById('cart-order');
 
     cart.innerHTML = "";
 
-    for(let i = 0; i < orderNames.length; i++){
+    for (let i = 0; i < orderNames.length; i++) {
         cart.innerHTML += `
         <div class="cart-order-layout">
             <div>
@@ -176,103 +179,31 @@ function arrayToCart(){
         </div>
         `;
     }
+    renderCartCosts();
 }
 
 
-// function addPizza(index) {
-//     let newCartItem = document.getElementById('cart-order');
+function renderCartCosts(){
+    let cartCosts = document.getElementById('cart-costs');
+    let total = 0;
 
-//     let searchValue = pizza[index]['name'];
-//     let price = pizza[index]['price'];
+    for (let i = 0; i < orderPrices.length; i++) {
+        total = total + orderPrices[i];
+    }
 
-    
-//     if (newCartItem.innerHTML.includes(searchValue)) {
-//         pizza[index]['amount']++;
-//         price = price * pizza[index]['amount'];
-
-//         let content = `
-//         <div class="cart-order-layout">
-//             <div>
-//                 ${pizza[index]['amount']}
-//             </div>
-//             <div>
-//                 ${pizza[index]['name']}
-//             </div>
-//             <div>
-//                 ${price.toFixed(2)}€
-//             </div>
-//         </div>
-//         `;
-//     }
-
-//     else {
-//         newCartItem.innerHTML += `
-//         <div class="cart-order-layout">
-//             <div>
-//                 ${pizza[index]['amount']}
-//             </div>
-
-//             <div>
-//                 ${pizza[index]['name']}
-//             </div>
-//             <div>
-//                 ${pizza[index]['price'].toFixed(2)}€
-//             </div>
-//         </div>
-//         `;
-//     }
-// }
+    cartCosts.innerHTML = total;
+}
 
 
-// function addPasta(index) {
-//     let newCartItem = document.getElementById('cart-order');
+function orderValue() {
+    let value = document.getElementById('cart-costs');
+    let message = document.getElementById('min-order-value');
 
-//     let searchValue = pasta[index]['name'];
+    if (value.value < 10 || value.value == null) {
+        message.innerHTML = 'Du hast den Mindestbestellwert von 10,00€ nicht erreicht.';
 
-//     if (newCartItem.innerHTML.includes(searchValue)) {
-//         pasta[index]['amount']++;
-//         price = price * pasta[index]['amount'];
-
-//         newCartItem.innerHTML = `
-//         <div class="cart-order-layout">
-//             <div>
-//                 ${pasta[index]['amount']}
-//             </div>
-
-//             <div>
-//                 ${pasta[index]['name']}
-//             </div>
-
-//             <div>
-                
-//             </div>
-
-//             <div>
-//                 ${price.toFixed(2)}€
-//             </div>
-//         </div>
-//         `;
-//     }
-
-//     else {
-//         newCartItem.innerHTML += `
-//     <div class="cart-order-layout">
-//         <div>
-//             ${pasta[index]['amount']}
-//         </div>
-
-//         <div>
-//             ${pasta[index]['name']}
-//         </div>
-
-//         <div>
-            
-//         </div>
-
-//         <div>
-//             ${pasta[index]['price'].toFixed(2)}€
-//         </div>
-//     </div>
-//     `;
-//     }
-// }
+    }
+    else {
+        message.innerHTML = 'Du hast den Mindestbestellwert von 10,00€ erreicht und kannst jetzt fortfahren.';
+    }
+}

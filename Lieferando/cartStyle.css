@@ -24,12 +24,22 @@
     margin-bottom: 10px;
 }
 
+.cart-costs{
+    height: 100px;
+}
+
 .cart-purchase{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.min-order-value{
+    text-align: center;
+    width: 80%;
 }
 
 .cart-purchase-btn{
