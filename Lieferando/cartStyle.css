@@ -24,8 +24,19 @@
     margin-bottom: 10px;
 }
 
+.cart-order-layout a{
+    text-decoration: none;
+    color: blue;
+}
+
 .cart-costs{
-    height: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.cart-costs-total{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .cart-purchase{

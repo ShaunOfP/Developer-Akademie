@@ -1,7 +1,7 @@
 let pizza = [
     {
         'name': 'Cheeseburger',
-        'description': 'mit 100g saftigem Rindfleischpatty, Käse, Hambrgersauce und Ketchup',
+        'description': 'mit 100g saftigem Rindfleischpatty, Käse, Hamburgersauce und Ketchup',
         'price': 5.60,
         'amount': 1
     },
@@ -35,7 +35,7 @@ let pizza = [
 let pasta = [
     {
         'name': 'Cheeseburger',
-        'description': 'mit 100g saftigem Rindfleischpatty, Käse, Hambrgersauce und Ketchup',
+        'description': 'mit 100g saftigem Rindfleischpatty, Käse, Hamburgersauce und Ketchup',
         'price': 5.60,
         'amount': 1
     },
@@ -71,7 +71,7 @@ let orderPrices = [];
 let orderAmount = [];
 
 
-orderValue();
+renderCartCosts();
 
 
 function render() {
@@ -168,10 +168,13 @@ function arrayToCart() {
         cart.innerHTML += `
         <div class="cart-order-layout">
             <div>
-                ${orderAmount[i]}
+                ${orderAmount[i]}x
             </div>
             <div>
                 ${orderNames[i]}
+            </div>
+            <div>
+                <a title="Delete" href="javascript:deleteCartObject(${i});">X</a>
             </div>
             <div>
                 ${orderPrices[i].toFixed(2)}€
@@ -184,26 +187,30 @@ function arrayToCart() {
 
 
 function renderCartCosts(){
-    let cartCosts = document.getElementById('cart-costs');
+    let cartCosts = document.getElementById('cart-costs-total');
     let total = 0;
 
     for (let i = 0; i < orderPrices.length; i++) {
         total = total + orderPrices[i];
     }
 
-    cartCosts.innerHTML = total;
-}
+    cartCosts.innerHTML = total.toFixed(2) + '€';
 
-
-function orderValue() {
-    let value = document.getElementById('cart-costs');
     let message = document.getElementById('min-order-value');
 
-    if (value.value < 10 || value.value == null) {
+    if (total < 10 || total == null) {
         message.innerHTML = 'Du hast den Mindestbestellwert von 10,00€ nicht erreicht.';
-
     }
     else {
         message.innerHTML = 'Du hast den Mindestbestellwert von 10,00€ erreicht und kannst jetzt fortfahren.';
     }
+}
+
+
+function deleteCartObject(i){
+    orderNames.splice(i, 1);
+    orderPrices.splice(i, 1);
+    orderAmount.splice(i, 1);
+
+    arrayToCart();
 }
