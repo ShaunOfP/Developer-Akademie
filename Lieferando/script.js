@@ -1,4 +1,4 @@
-let pizza = [
+let menuCard = [
     {
         'name': 'Cheeseburger',
         'description': 'mit 100g saftigem Rindfleischpatty, Käse, Hamburgersauce und Ketchup',
@@ -28,37 +28,36 @@ let pizza = [
         'description': 'yy',
         'price': 9.00,
         'amount': 1
-    }
-];
-
-
-let pasta = [
+    },
     {
-        'name': 'Cheeseburger',
+        'name': 'SEPERATOR'
+    },
+    {
+        'name': 'Cranberries',
         'description': 'mit 100g saftigem Rindfleischpatty, Käse, Hamburgersauce und Ketchup',
         'price': 5.60,
         'amount': 1
     },
     {
-        'name': 'Pizza Salami',
+        'name': 'Steven',
         'description': 'xy',
         'price': 8.40,
         'amount': 1
     },
     {
-        'name': 'Pizza Margeritha',
+        'name': 'Ferrari',
         'description': 'yx',
         'price': 4.20,
         'amount': 1
     },
     {
-        'name': 'Salat',
+        'name': 'Karsten',
         'description': 'xx',
         'price': 12.00,
         'amount': 1
     },
     {
-        'name': 'Zeugs',
+        'name': 'Peter',
         'description': 'yy',
         'price': 9.00,
         'amount': 1
@@ -79,81 +78,43 @@ function render() {
 
     menu.innerHTML = '';
 
-    for (let i = 0; i < pizza.length; i++) {
-        const pizzaBox = pizza[i];
+    for (let i = 0; i < menuCard.length; i++) {
+        const foodBox = menuCard[i];
 
-        menu.innerHTML += `
-        <div class="mbody-product">
-            <div>
-                <h3>${pizzaBox['name']}</h3>
-                <span>${pizzaBox['description']}</span>
-                <p>${pizzaBox['price'].toFixed(2)}€</p>
+        if (foodBox['name'] == 'SEPERATOR') {
+            menu.innerHTML += `<div>DAS HIER IST EIN BILD</div>`;
+        }
+        else {
+            menu.innerHTML += `
+            <div class="mbody-product">
+                <div>
+                    <h3>${foodBox['name']}</h3>
+                    <span>${foodBox['description']}</span>
+                    <p>${foodBox['price'].toFixed(2)}€</p>
+                </div>
+                <div class="mbody-btn">
+                    <button onclick="addMenuToArray(${i})"><ion-icon name="add-outline"></ion-icon></button>
+                </div>
             </div>
-            <div class="mbody-btn">
-                <button onclick="addPizzaToArray(${i})"><ion-icon name="add-outline"></ion-icon></button>
-            </div>
-        </div>
-        `;
-    }
-
-    for (let i = 0; i < pasta.length; i++) {
-        const pastaBox = pasta[i];
-
-        menu.innerHTML += `
-        <div class="mbody-product">
-            <div>
-                <h3>${pastaBox['name']}</h3>
-                <span>${pastaBox['description']}</span>
-                <p>${pastaBox['price'].toFixed(2)}€</p>
-            </div>
-            <div class="mbody-btn">
-                <button onclick="addPastaToArray(${i})"><ion-icon name="add-outline"></ion-icon></button>
-            </div>
-        </div>
-        `;
+            `;
+        }
     }
 }
 
 
-function addPizzaToArray(index) {
-    let pizzaName = pizza[index]['name'];
-    let pizzaPrice = pizza[index]['price'];
-    let pizzaAmount = pizza[index]['amount'];
+function addMenuToArray(index) {
+    let name = menuCard[index]['name'];
+    let price = menuCard[index]['price'];
+    let amount = menuCard[index]['amount'];
 
-    if (orderNames.includes(pizzaName)) {
+    if (orderNames.includes(name)) {
         orderAmount[index]++;
-        orderPrices[index] = pizzaPrice * orderAmount[index];
+        orderPrices[index] = price * orderAmount[index];
     }
     else {
-        let newName = pizzaName;
-        let newPrice = +pizzaPrice;
-        let newAmount = +pizzaAmount;
-
-        orderNames.push(newName);
-        orderPrices.push(newPrice);
-        orderAmount.push(newAmount);
-    }
-    arrayToCart();
-}
-
-
-function addPastaToArray(index) {
-    let pastaName = pasta[index]['name'];
-    let pastaPrice = pasta[index]['price'];
-    let pastaAmount = pasta[index]['amount'];
-
-    if (orderNames.includes(pastaName)) {
-        orderAmount[index]++;
-        orderPrices[index] = pastaPrice * orderAmount[index];
-    }
-    else {
-        let newName = pastaName;
-        let newPrice = +pastaPrice;
-        let newAmount = +pastaAmount;
-
-        orderNames.push(newName);
-        orderPrices.push(newPrice);
-        orderAmount.push(newAmount);
+        orderNames.push(name);
+        orderPrices.push(+price);
+        orderAmount.push(+amount);
     }
     arrayToCart();
 }
@@ -186,7 +147,7 @@ function arrayToCart() {
 }
 
 
-function renderCartCosts(){
+function renderCartCosts() {
     let cartCosts = document.getElementById('cart-costs-total');
     let total = 0;
 
@@ -207,10 +168,24 @@ function renderCartCosts(){
 }
 
 
-function deleteCartObject(i){
+function deleteCartObject(i) {
     orderNames.splice(i, 1);
     orderPrices.splice(i, 1);
     orderAmount.splice(i, 1);
 
     arrayToCart();
+}
+
+
+function clearCart() {
+    let resetValue = 0;
+
+    document.getElementById('cart-order').innerHTML = '';
+    document.getElementById('cart-costs-total').innerHTML = resetValue.toFixed(2) + '€';
+
+    orderNames = [];
+    orderPrices = [];
+    orderAmount = [];
+
+    alert("Ihre Bestellung wird bearbeitet...");
 }

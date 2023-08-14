@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="cartStyle.css">
     <link rel="stylesheet" href="menuHeadStyle.css">
     <link rel="stylesheet" href="menuStyle.css">
+    <link rel="stylesheet" href="footerStyle.css">
     <script src="script.js" async></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,7 +84,7 @@
                         <h3>Beliebte Gerichte</h3>
                     </div>
 
-                    <div id="mbody-objects"></div>                    
+                    <div id="mbody-objects"></div>
                 </div>
             </section>
 
@@ -112,12 +113,20 @@
 
             <div class="cart-purchase" id="cart-purchase">
                 <div id="min-order-value" class="min-order-value"></div>
-                <button class="cart-purchase-btn" id="cart-purchase-btn">Bestellen</button>
+                <button class="cart-purchase-btn" id="cart-purchase-btn" onclick="clearCart()">Bestellen</button>
             </div>
         </section>
     </section>
 
     <footer>
+        <div class="footer-links">
+            <a href="#">Impressum</a>
+            <a href="#">Datenschutz</a>
+            <a href="#">AGB's</a>
+        </div>
+        <div class="logo-footer">
+            <img src="./img/logo.png">
+        </div>
     </footer>
 
     <!-- For the AddButton -->

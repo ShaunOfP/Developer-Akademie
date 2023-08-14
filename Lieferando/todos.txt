@@ -16,5 +16,9 @@ allgemein:
 -sprache übersetzen
 
 einkaufswagen:
--müllkorb
 -plus minus knopf
+
+Problematik:
+-objekte hinzufügen und löschen
+-ein objekt neu hinzufügen(nciht das erste)
+-NaN(glaube er umgeht die if abfrage und pusht ein neues Objekt, obwohl ein gleichnamiges schon existiert)
