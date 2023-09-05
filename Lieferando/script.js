@@ -108,8 +108,10 @@ function addMenuToArray(index) {
     let amount = menuCard[index]['amount'];
 
     if (orderNames.includes(name)) {
-        orderAmount[index]++;
-        orderPrices[index] = price * orderAmount[index];
+        let place = orderNames.indexOf(name);
+        
+        orderAmount[place]++;
+        orderPrices[place] = price * orderAmount[place];
     }
     else {
         orderNames.push(name);
@@ -179,27 +181,32 @@ function deleteCartObject(i) {
 
 function clearCart() {
     let resetValue = 0;
+    let cartSum = document.getElementById('cart-costs-total').innerHTML;
 
-    document.getElementById('cart-order').innerHTML = '';
-    document.getElementById('cart-costs-total').innerHTML = resetValue.toFixed(2) + '€';
+    if (cartSum == '0.00€') {
 
-    orderNames = [];
-    orderPrices = [];
-    orderAmount = [];
+    } else {
+        document.getElementById('cart-order').innerHTML = '';
+        document.getElementById('cart-costs-total').innerHTML = resetValue.toFixed(2) + '€';
 
-    alert("Ihre Bestellung wird bearbeitet...");
+        orderNames = [];
+        orderPrices = [];
+        orderAmount = [];
+
+        alert("Ihre Bestellung wird bearbeitet...");
+    }
 }
 
 
 window.addEventListener('scroll', () => shoppingCartPosition());
 
 
-function shoppingCartPosition(){
+function shoppingCartPosition() {
     let shoppingCart = document.getElementById('cart');
 
-    if(window.scrollY > 0){
+    if (window.scrollY > 0) {
         shoppingCart.style = 'top: 0px';
-    } else if(window.scrollY > 0 && window.scrollY < 100){
+    } else if (window.scrollY > 0 && window.scrollY < 100) {
         let height = 100 - window.scrollY;
         shoppingCart.style = `top: ${height}px`;
     } else {
