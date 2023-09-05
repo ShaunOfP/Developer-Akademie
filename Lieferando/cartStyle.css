@@ -1,7 +1,12 @@
 .cart{
-    height: 80vh;
     width: 30%;
-    box-shadow: -1px 0 3px 0 lightgrey;
+    right: 0;
+    top: 100px;
+    bottom: 0;
+    box-shadow: -2px 1px 17px 5px rgba(199 199 199 / 43%);
+    background-color: white;
+    position: fixed;
+    transition: all 200ms 
 }
 
 .cart-headline{

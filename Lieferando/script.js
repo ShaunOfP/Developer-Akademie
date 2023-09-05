@@ -189,3 +189,20 @@ function clearCart() {
 
     alert("Ihre Bestellung wird bearbeitet...");
 }
+
+
+window.addEventListener('scroll', () => shoppingCartPosition());
+
+
+function shoppingCartPosition(){
+    let shoppingCart = document.getElementById('cart');
+
+    if(window.scrollY > 0){
+        shoppingCart.style = 'top: 0px';
+    } else if(window.scrollY > 0 && window.scrollY < 100){
+        let height = 100 - window.scrollY;
+        shoppingCart.style = `top: ${height}px`;
+    } else {
+        shoppingCart.style = 'top: 100px';
+    }
+}
