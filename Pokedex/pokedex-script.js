@@ -1,8 +1,9 @@
-let howManyPokemon = 6;
+let howManyPokemon = 10;
 let allPokemon = [];
 let allPokemonFixedFirst = [];
 let pokemonData = [];
 let allPokemonData = [];
+let pokemonID = 1;
 
 async function initMain() {
     await loadAllPokemon();
@@ -13,7 +14,7 @@ async function initMain() {
 
 async function loadAllPokemon() {
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${howManyPokemon}`); // zu 1010 ändern
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${howManyPokemon}`);
         const data = await response.json();
         allPokemon = pokemonNames = data.results.map((pokemon) => pokemon.name); //Filtert die ergebnisse aus der data Variablen nach den Namen und speichert diese in einem neuen Array (allPokemon)
         return;
@@ -37,8 +38,9 @@ function mainFixFirstLetter() {
 async function renderPokemonInfo() {
     let pokeContainer = document.getElementById('pokemonContainer');
 
-    pokeContainer.innerHTML = "";
+    await pushDataToArray();
 
+    pokeContainer.innerHTML = "";
 
     for (let j = 0; j < allPokemon.length; j++) {
         let currentPokemon = allPokemon[j];
@@ -49,7 +51,7 @@ async function renderPokemonInfo() {
 
         if (pokeTypeLength == 1) {
             pokeContainer.innerHTML += `
-            <div class="poke-Info-Card" onclick="clicked(${j})">
+            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j})">
                 <div class="pokemon-card-header">
                     ${allPokemonFixedFirst[j]}
                 </div>
@@ -61,7 +63,7 @@ async function renderPokemonInfo() {
             `;
         } else {
             pokeContainer.innerHTML += `
-            <div class="poke-Info-Card" onclick="clicked(${j})">
+            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j})">
                 <div class="pokemon-card-header">
                     ${allPokemonFixedFirst[j]}
                 </div>
@@ -75,8 +77,10 @@ async function renderPokemonInfo() {
             </div>
             `;
         }
+
+        let backgroundColor = allPokemonData[j];
+        document.getElementById(`pokeInfoCard${j}`).style.backgroundColor = backgroundColor['color'];
     }
-    pushDataToArray();
 }
 
 
@@ -89,9 +93,14 @@ async function getPokemonInfo(getCurrentPokemonInfo) {
 
     if (pokeTypeLength == 1) {
         pokeType = pokemonData['types'][0]['type']['name'];
+        pokeType = pokeType.charAt(0).toUpperCase() + pokeType.slice(1);
         return [pokeTypeLength, pokeType, pokeImage];
     } else {
-        pokeType.push(pokemonData['types'][0]['type']['name'], pokemonData['types'][1]['type']['name']);
+        let typeOne = pokemonData['types'][0]['type']['name'];
+        let typeTwo = pokemonData['types'][1]['type']['name'];
+        typeOne = typeOne.charAt(0).toUpperCase() + typeOne.slice(1);
+        typeTwo = typeTwo.charAt(0).toUpperCase() + typeTwo.slice(1);
+        pokeType.push(typeOne, typeTwo);
         return [pokeTypeLength, pokeType, pokeImage];
     }
 }
@@ -108,7 +117,7 @@ async function loadPokemonData(currentPokemonName) {
 async function pushDataToArray() {
     for (let x = 0; x < allPokemon.length; x++) {
         let pokemonName = allPokemon[x];
-        let pokemonID = pokemonData['id'];
+        //let pokemonID = pokemonData['id'];
         //pokeTypeLength einfügen
         //pokeImage einfügen
         //pokeType einfügen
@@ -128,10 +137,10 @@ async function pushDataToArray() {
                     };
 
                     allPokemonData.push(dataFeed);
+                    pokemonID++;
                 }
             }
         }
-
     }
 }
 

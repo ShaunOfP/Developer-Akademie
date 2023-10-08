@@ -15,6 +15,8 @@ function renderPokemonHeaderInfo() {
     let pokemonName = fixFirstLetter(currentPokemon['name']);
     let pokemonTypeLength = currentPokemon['types'];
 
+    document.getElementById('pokemonType').innerHTML = "";
+
     document.getElementById('pokemonImage').src = currentPokemon['sprites']['front_default'];
     document.getElementById('pokemonName').innerHTML = pokemonName;
     document.getElementById('pokemonId').innerHTML = currentPokemon['id'];

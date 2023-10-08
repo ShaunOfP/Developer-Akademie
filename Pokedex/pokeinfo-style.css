@@ -4,7 +4,6 @@
 }
 
 .poke-Info-Card{
-    background-color: grey;
     height: 150px;
     width: 220px;
     margin-bottom: 10px;
@@ -14,7 +13,7 @@
 }
 
 .poke-Info-Card:hover{
-    background-color: rgb(151, 112, 112);
+    background-color: rgb(187, 187, 187);
 }
 
 .pokemon-card-header{
