@@ -44,3 +44,37 @@ function showPokedex(){
 }
 
 
+function renderAboutInfo(){
+    let content = document.getElementById('about-current-pokemon');
+
+    content.innerHTML = '';
+    content.innerHTML = `
+        <div class="">
+            <div class="">
+                <div>Species</div>
+                <div>Height</div>
+                <div>Weight</div>
+                <div>Abilities</div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    `;
+
+}
+
+function renderBaseStatsInfo(){
+    let content = document.getElementById('base-stats-current-pokemon');
+}
+
+function renderEvolutionInfo(){
+    let content = document.getElementById('evolution-current-pokemon');
+}
+
+function renderMovesInfo(){
+    let content = document.getElementById('moves-current-pokemon');
+}
