@@ -16,21 +16,29 @@
     <h1 id="main-headline">Pokedex</h1>
 
     <div id="pokedexContainer" class="dp-none">
-        <ion-icon onclick="showPokedex()" name="arrow-back-outline"></ion-icon>
-        <div id="pokedex">
-            <div>
-                <h1 id="pokemonName"></h1>
-                <div class="pokemonType" id="pokemonType"></div>
+        <div>
+            <div id="pokedex">
+                <ion-icon class="ion-arrow" onclick="showPokedex()" name="arrow-back-outline"></ion-icon>
+                <div>
+                    <h1 id="pokemonName"></h1>
+                    <div class="pokemonType" id="pokemonType"></div>
+                </div>
+                <div>
+                    <div class="pokemon-id" id="pokemonId"></div>
+                </div>
             </div>
 
-            <div class="poke-id-style">
-                <div class="pokemon-id" id="pokemonId"></div>
+            <div class="pokemon-image">
+                <img id="pokemonInfoImage">
             </div>
         </div>
 
         <div class="info-container">
-            <div class="pokemon-image">
-                <img id="pokemonImage">
+            <div class="info-container-header">
+                <a href="#">About</a>
+                <a href="#">Base Stats</a>
+                <a href="#">Evolution</a>
+                <a href="#">Moves</a>
             </div>
         </div>
     </div>

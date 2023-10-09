@@ -53,9 +53,14 @@ async function renderPokemonInfo() {
             pokeContainer.innerHTML += `
             <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j})">
                 <div class="pokemon-card-header">
-                    ${allPokemonFixedFirst[j]}
+                    <div>
+                        ${allPokemonFixedFirst[j]}
+                    </div>
+                    <div>
+                        ${j+1}
+                    </div>
                 </div>
-                <div class="dp-flex">
+                <div class="dp-flex-space-between">
                     <div class="pokemon-type-styling">${pokeType}</div>
                     <div><img src=${pokeImage}></div>
                 </div>
@@ -65,9 +70,14 @@ async function renderPokemonInfo() {
             pokeContainer.innerHTML += `
             <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j})">
                 <div class="pokemon-card-header">
-                    ${allPokemonFixedFirst[j]}
+                    <div>
+                        ${allPokemonFixedFirst[j]}
+                    </div>
+                    <div>
+                        ${j+1}
+                    </div>
                 </div>
-                <div class="dp-flex">
+                <div class="dp-flex-space-between">
                     <div>
                         <div class="pokemon-type-styling">${pokeType[0]}</div>
                         <div class="pokemon-type-styling">${pokeType[1]}</div>
@@ -117,11 +127,6 @@ async function loadPokemonData(currentPokemonName) {
 async function pushDataToArray() {
     for (let x = 0; x < allPokemon.length; x++) {
         let pokemonName = allPokemon[x];
-        //let pokemonID = pokemonData['id'];
-        //pokeTypeLength einfügen
-        //pokeImage einfügen
-        //pokeType einfügen
-
 
         for (let s = 1; s < 11; s++) {
             let url = `https://pokeapi.co/api/v2/pokemon-color/${s}/`;

@@ -17,7 +17,7 @@ function renderPokemonHeaderInfo() {
 
     document.getElementById('pokemonType').innerHTML = "";
 
-    document.getElementById('pokemonImage').src = currentPokemon['sprites']['front_default'];
+    document.getElementById('pokemonInfoImage').src = currentPokemon['sprites']['front_default'];
     document.getElementById('pokemonName').innerHTML = pokemonName;
     document.getElementById('pokemonId').innerHTML = currentPokemon['id'];
     
@@ -42,3 +42,5 @@ function showPokedex(){
     document.getElementById('main-headline').classList.remove('dp-none');
     document.getElementById('pokedexContainer').classList.add('dp-none');
 }
+
+
