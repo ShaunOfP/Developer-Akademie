@@ -5,6 +5,7 @@ body {
 
 #main-headline{
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .pokemon-container {
@@ -22,7 +23,6 @@ body {
 }
 
 .poke-Info-Card:hover {
-    background-color: rgb(187, 187, 187);
     cursor: pointer;
 }
 

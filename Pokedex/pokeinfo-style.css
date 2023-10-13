@@ -1,6 +1,5 @@
 #pokedex {
     min-height: 50vh;
-    background-color: #49D0B0;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -73,6 +72,31 @@
 .info-container-header a:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.render-info{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.render-info-titles{
+    margin-left: 90px;
+    color: rgb(90, 90, 90);
+    font-weight: 600;
+}
+
+.render-info-titles div{
+    margin-bottom: 15px;
+}
+
+.render-info-data{
+    margin-left: 90px;
+    color: black;
+    font-weight: 600;
+}
+
+.render-info-data div{
+    margin-bottom: 15px;
 }
 
 @media(max-width: 414px) {
