@@ -1,4 +1,4 @@
-let howManyPokemon = 23;
+let howManyPokemon = 27;
 let allPokemon = [];
 let allPokemonFixedFirst = [];
 let pokemonData = [];

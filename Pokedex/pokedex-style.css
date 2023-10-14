@@ -65,3 +65,16 @@ body {
 .pokemon-container{
     margin-left: 10px;
 }
+
+@media(max-width: 414px) {
+    .poke-Info-Card{
+        height: 100px;
+        width: 150px;
+    }
+    .pokemon-card-header{
+        margin-top: -5px;
+    }
+    .pokemon-type-styling{
+        width: 50px;
+    }
+}

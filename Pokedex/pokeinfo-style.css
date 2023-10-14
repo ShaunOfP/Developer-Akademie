@@ -76,16 +76,21 @@
 
 .render-info{
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    margin-left: 10%;
 }
 
-.render-info-titles{
-    margin-left: 90px;
+.render-info-overall{
+    display: flex;
+}
+
+.render-info-measures{
+    width: 90px;
+}
+
+.render-info-title{
     color: rgb(90, 90, 90);
     font-weight: 600;
-}
-
-.render-info-titles div{
     margin-bottom: 15px;
 }
 
@@ -93,12 +98,23 @@
     margin-left: 90px;
     color: black;
     font-weight: 600;
-}
-
-.render-info-data div{
     margin-bottom: 15px;
 }
 
+.render-info-second-headline{
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.render-info-second-container{
+    display: flex;
+}
+
 @media(max-width: 414px) {
-    
+    .info-container-header a{
+        font-size: larger;
+        margin-top: 20px;
+    }
+
 }
