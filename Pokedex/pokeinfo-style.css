@@ -126,6 +126,10 @@
     text-align: center;
 }
 
+.c-black{
+    color: black;
+}
+
 @media(max-width: 414px) {
     .info-container-header a{
         font-size: larger;

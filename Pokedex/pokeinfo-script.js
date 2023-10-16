@@ -48,18 +48,18 @@ function colorFinder() {
                 case 'blue':
                     return '#0000bd';
                 case 'yellow':
-                    return '#caca00'; 
+                    return '#caca00';
                 case 'brown':
                     return '#381613';
-                case 'green':                    
+                case 'green':
                     return '#008000';
-                case 'black':                    
+                case 'black':
                     return '#000000';
-                case 'gray':                    
+                case 'gray':
                     return '#808080';
-                case 'pink':                    
+                case 'pink':
                     return '#FFC0CB';
-                case 'purple':                    
+                case 'purple':
                     return '#800080';
                 default:
                     alert("BGC not found!");
@@ -215,9 +215,7 @@ async function renderEvolutionInfo() {
         evolutions = await response.json();
 
         if (evolutions['chain']['species']['name'] == currentPokemon['name']) {
-
             let firstEvolution = evolutions['chain']['evolves_to'][0]['species']['name'];
-
             let firstUrl = `https://pokeapi.co/api/v2/pokemon/${firstEvolution}`;
             let firstResponse = await fetch(firstUrl);
             let firstEvolutionInfo = await firstResponse.json();
@@ -236,22 +234,10 @@ async function renderEvolutionInfo() {
                             </div>
                         </div>
                     </div>
-
-                    <span class="render-info-second-headline">Type defenses</span>
-
-                    <div class="render-info-second-container">
-                        <div class="render-info-measures">
-                            <div class="render-info-title">n/a</div>              
-                        </div>
-                        <div>
-                            <div class="render-info-data">n/a</div>              
-                        </div>
-                    </div> 
                 </div>
                 `;
             } else {
                 let secondEvolution = evolutions['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
-
                 let secondUrl = `https://pokeapi.co/api/v2/pokemon/${secondEvolution}`;
                 let secondResponse = await fetch(secondUrl);
                 let secondEvolutionInfo = await secondResponse.json();
@@ -277,17 +263,6 @@ async function renderEvolutionInfo() {
                             </div>
                         </div>
                     </div>
-
-                    <span class="render-info-second-headline">Type defenses</span>
-
-                    <div class="render-info-second-container">
-                        <div class="render-info-measures">
-                            <div class="render-info-title">n/a</div>              
-                        </div>
-                        <div>
-                            <div class="render-info-data">n/a</div>              
-                        </div>
-                    </div> 
                 </div>
                 `;
             }
@@ -316,6 +291,41 @@ async function renderEvolutionInfo() {
 }
 
 
-function renderMovesInfo() {
+async function renderMovesInfo() {
     let content = document.getElementById('pokeinfo-details');
+
+    for (let i = 1; i <= 303; i++) { //in 303 steht kein Pokemon dabei, deshalb eig unnötig
+        let url = `https://pokeapi.co/api/v2/ability/${i}/`;
+        let response = await fetch(url);
+        let abilities = await response.json();
+
+        for (let j = 0; j < abilities['pokemon'].length; j++)
+        if (abilities['pokemon'][j]['pokemon']['name'] == currentPokemon['name']) {
+            content.innerHTML = `
+                <div class="render-info">
+                    <div class="render-info-title c-black">
+                        Ability
+                    </div>
+                    <div>
+                        ${fixFirstLetter(abilities['name'])}
+                    </div>
+                    
+                    <span class="render-info-second-headline">Description</span>
+
+                    <div class="render-info-second-container">
+                        <div class="render-info-measures">
+                            <div class="render-info-title">Gender</div>
+                            <div class="render-info-title">Egg Groups</div>
+                            <div class="render-info-title">Egg Cycle</div>                
+                        </div>
+                        <div>
+                            <div class="render-info-data">ghfghfgh</div>
+                            <div class="render-info-data">X</div>
+                            <div class="render-info-data">X</div>                
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
 }
