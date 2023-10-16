@@ -111,6 +111,21 @@
     display: flex;
 }
 
+.render-evolution-info{
+    display: flex;
+}
+
+.evolve-frame{
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 10px;
+}
+
+.evolution-box-text{
+    text-align: center;
+}
+
 @media(max-width: 414px) {
     .info-container-header a{
         font-size: larger;

@@ -1,4 +1,5 @@
 let currentPokemon;
+let evolutions = [];
 
 
 async function loadPokemon(id) {
@@ -20,7 +21,8 @@ function renderPokemonHeaderInfo() {
 
     document.getElementById('pokemonType').innerHTML = "";
 
-    document.getElementById('pokemonInfoImage').src = currentPokemon['sprites']['front_default'];
+    //document.getElementById('pokemonInfoImage').src = currentPokemon['sprites']['front_default'];
+    document.getElementById('pokemonInfoImage').src = currentPokemon['sprites']['other']['official-artwork']['front_default'];
     document.getElementById('pokemonName').innerHTML = pokemonName;
     document.getElementById('pokemonId').innerHTML = currentPokemon['id'];
 
@@ -37,7 +39,31 @@ function renderPokemonHeaderInfo() {
 function colorFinder() {
     for (let i = 0; i < allPokemon.length; i++) {
         if (allPokemonData[i]['name'] == currentPokemon['name']) {
-            return allPokemonData[i]['color'];
+            let PokeInfoBgColor = allPokemonData[i]['color'];
+            switch (PokeInfoBgColor) {
+                case 'red':
+                    return '#a51212';
+                case 'white':
+                    return '#dddddd';
+                case 'blue':
+                    return '#0000bd';
+                case 'yellow':
+                    return '#caca00'; 
+                case 'brown':
+                    return '#381613';
+                case 'green':                    
+                    return '#008000';
+                case 'black':                    
+                    return '#000000';
+                case 'gray':                    
+                    return '#808080';
+                case 'pink':                    
+                    return '#FFC0CB';
+                case 'purple':                    
+                    return '#800080';
+                default:
+                    alert("BGC not found!");
+            }
         }
     }
 }
@@ -54,6 +80,7 @@ function showPokedex() {
     document.getElementById('pokemonContainer').classList.remove('dp-none');
     document.getElementById('main-headline').classList.remove('dp-none');
     document.getElementById('pokedexContainer').classList.add('dp-none');
+    document.getElementById('body').classList.remove('bg-white');
 }
 
 
@@ -62,7 +89,7 @@ function renderAboutInfo() {
 
     content.innerHTML = '';
 
-    if(currentPokemon['abilities'].length == 1){
+    if (currentPokemon['abilities'].length == 1) {
         content.innerHTML = `
         <div class="render-info">
             <div class="render-info-overall">
@@ -94,11 +121,10 @@ function renderAboutInfo() {
                     <div class="render-info-data">X</div>                
                 </div>
             </div>
-            
         </div>
     `;
     } else {
-    content.innerHTML = `
+        content.innerHTML = `
         <div class="render-info">
             <div class="render-info-overall">
                 <div class="render-info-measures">
@@ -128,8 +154,7 @@ function renderAboutInfo() {
                     <div class="render-info-data">X</div>
                     <div class="render-info-data">X</div>                
                 </div>
-            </div>
-            
+            </div>   
         </div>
     `;
     }
@@ -176,30 +201,118 @@ function renderBaseStatsInfo() {
 }
 
 
-function renderEvolutionInfo() {
+async function renderEvolutionInfo() {
     let content = document.getElementById('pokeinfo-details');
 
-    content.innerHTML = `
-        <div class="render-info">
-            <span>evolves to:</span>
-            <div>
-                img
-            </div>
-        
+    //543
+    for (let i = 1; i <= 27; i++) {
+        if (i == 210 || i == 222 || i == 225 || i == 226 || i == 227 || i == 231 || i == 238 || i == 251) {
+            continue;
+        }
 
-            <span class="render-info-second-headline">Type defenses</span>
+        let url = `https://pokeapi.co/api/v2/evolution-chain/${i}/`;
+        let response = await fetch(url);
+        evolutions = await response.json();
 
-            <div class="render-info-second-container">
-                <div class="render-info-measures">
-                    <div class="render-info-title">n/a</div>              
+        if (evolutions['chain']['species']['name'] == currentPokemon['name']) {
+
+            let firstEvolution = evolutions['chain']['evolves_to'][0]['species']['name'];
+
+            let firstUrl = `https://pokeapi.co/api/v2/pokemon/${firstEvolution}`;
+            let firstResponse = await fetch(firstUrl);
+            let firstEvolutionInfo = await firstResponse.json();
+
+            if (evolutions['chain']['evolves_to'][0]['evolves_to'].length == 0) {
+                content.innerHTML = `
+                <div class="render-info">
+                    <span>evolves to:</span>
+                    <div class="render-evolution-info">
+                        <div class="evolve-frame">
+                            <div>
+                                <img src=${firstEvolutionInfo['sprites']['front_default']}>
+                            </div>
+                            <div class="evolution-box-text">
+                                ${fixFirstLetter(firstEvolution)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="render-info-second-headline">Type defenses</span>
+
+                    <div class="render-info-second-container">
+                        <div class="render-info-measures">
+                            <div class="render-info-title">n/a</div>              
+                        </div>
+                        <div>
+                            <div class="render-info-data">n/a</div>              
+                        </div>
+                    </div> 
                 </div>
-                <div>
-                    <div class="render-info-data">n/a</div>              
+                `;
+            } else {
+                let secondEvolution = evolutions['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
+
+                let secondUrl = `https://pokeapi.co/api/v2/pokemon/${secondEvolution}`;
+                let secondResponse = await fetch(secondUrl);
+                let secondEvolutionInfo = await secondResponse.json();
+
+                content.innerHTML = `
+                <div class="render-info">
+                    <span>evolves to:</span>
+                    <div class="render-evolution-info">
+                        <div class="evolve-frame">
+                            <div>
+                                <img src=${firstEvolutionInfo['sprites']['front_default']}>
+                            </div>
+                            <div class="evolution-box-text">
+                                ${fixFirstLetter(firstEvolution)}
+                            </div>
+                        </div>
+                        <div class="evolve-frame">
+                            <div>
+                                <img src=${secondEvolutionInfo['sprites']['front_default']}>
+                            </div>
+                            <div class="evolution-box-text">
+                                ${fixFirstLetter(secondEvolution)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="render-info-second-headline">Type defenses</span>
+
+                    <div class="render-info-second-container">
+                        <div class="render-info-measures">
+                            <div class="render-info-title">n/a</div>              
+                        </div>
+                        <div>
+                            <div class="render-info-data">n/a</div>              
+                        </div>
+                    </div> 
                 </div>
-            </div>
-            
-        </div>
-    `;
+                `;
+            }
+            break;
+        } else {
+            content.innerHTML = `
+                <div class="render-info">
+                    <div>
+                        <b>There are no evolutions for ${fixFirstLetter(currentPokemon['name'])}</b>
+                    </div>
+                    
+                    <span class="render-info-second-headline">Type defenses</span>
+
+                    <div class="render-info-second-container">
+                        <div class="render-info-measures">
+                            <div class="render-info-title">n/a</div>              
+                        </div>
+                        <div>
+                            <div class="render-info-data">n/a</div>              
+                        </div>
+                    </div> 
+                </div>
+            `;
+        }
+    }
 }
 
 

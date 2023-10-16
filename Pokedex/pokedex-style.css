@@ -1,6 +1,47 @@
 body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+    background-color: rgb(204, 255, 181);
+}
+
+.card-bg-yellow{
+    background-color: rgb(202, 202, 0);
+}
+
+.card-bg-red{
+    background-color: rgb(165, 18, 18);
+}
+
+.card-bg-blue{
+    background-color: rgb(0, 0, 189);
+}
+
+.card-bg-white{
+    background-color: rgb(221, 221, 221);
+}
+
+.card-bg-brown{
+    background-color: #381613;
+}
+
+.card-bg-green{
+    background-color: green;
+}
+
+.card-bg-black{
+    background-color: black;
+}
+
+.card-bg-gray{
+    background-color: gray;
+}
+
+.card-bg-pink{
+    background-color: pink;
+}
+
+.card-bg-purple{
+    background-color: purple;
 }
 
 #main-headline{
@@ -58,8 +99,16 @@ body {
     width: 60px;
 }
 
+.max-height{
+    max-height: 22px;
+}
+
 .dp-none {
     display: none;
+}
+
+.bg-white{
+    background-color: white;
 }
 
 .pokemon-container{

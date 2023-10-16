@@ -1,4 +1,4 @@
-let howManyPokemon = 27;
+let howManyPokemon = 10; //1010 aktuelle anzahl der Pokemon im Pokedex
 let allPokemon = [];
 let allPokemonFixedFirst = [];
 let pokemonData = [];
@@ -38,7 +38,7 @@ function mainFixFirstLetter() {
 async function renderPokemonInfo() {
     let pokeContainer = document.getElementById('pokemonContainer');
 
-    await pushDataToArray();
+    await pushColorDataToArray();
 
     pokeContainer.innerHTML = "";
 
@@ -57,11 +57,11 @@ async function renderPokemonInfo() {
                         ${allPokemonFixedFirst[j]}
                     </div>
                     <div>
-                        ${j+1}
+                        ${j + 1}
                     </div>
                 </div>
                 <div class="dp-flex-space-between">
-                    <div class="pokemon-type-styling">${pokeType}</div>
+                    <div class="pokemon-type-styling max-height">${pokeType}</div>
                     <div><img src=${pokeImage}></div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ async function renderPokemonInfo() {
                         ${allPokemonFixedFirst[j]}
                     </div>
                     <div>
-                        ${j+1}
+                        ${j + 1}
                     </div>
                 </div>
                 <div class="dp-flex-space-between">
@@ -89,7 +89,42 @@ async function renderPokemonInfo() {
         }
 
         let backgroundColor = allPokemonData[j];
-        document.getElementById(`pokeInfoCard${j}`).style.backgroundColor = backgroundColor['color'];
+        //document.getElementById(`pokeInfoCard${j}`).style.backgroundColor = backgroundColor['color']; //alte Farben, find ich nicht so nice
+
+        switch (backgroundColor['color']) {
+            case 'red':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-red');
+                break;
+            case 'white':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-white');
+                break;
+            case 'blue':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-blue');
+                break;
+            case 'yellow':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-yellow');
+                break;
+            case 'brown':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-brown');
+                break;
+            case 'green':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-green');
+                break;
+            case 'black':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-black');
+                break;
+            case 'gray':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-gray');
+                break;
+            case 'pink':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-pink');
+                break;
+            case 'purple':
+                document.getElementById(`pokeInfoCard${j}`).classList.add('card-bg-purple');
+                break;
+            default:
+                alert("BGC not found!");
+        }
     }
 }
 
@@ -124,7 +159,7 @@ async function loadPokemonData(currentPokemonName) {
 }
 
 
-async function pushDataToArray() {
+async function pushColorDataToArray() {
     for (let x = 0; x < allPokemon.length; x++) {
         let pokemonName = allPokemon[x];
 
@@ -154,6 +189,7 @@ async function clicked(id) {
     document.getElementById('pokemonContainer').classList.add('dp-none');
     document.getElementById('main-headline').classList.add('dp-none');
     document.getElementById('pokedexContainer').classList.remove('dp-none');
+    document.getElementById('body').classList.add('bg-white');
 
     await loadPokemon(id);
 }
