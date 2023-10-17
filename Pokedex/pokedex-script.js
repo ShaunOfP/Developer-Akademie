@@ -1,4 +1,4 @@
-let howManyPokemon = 120; //1010 aktuelle anzahl der Pokemon im Pokedex
+let howManyPokemon = 20; //1010 aktuelle anzahl der Pokemon im Pokedex
 let allPokemon = [];
 let allPokemonFixedFirst = [];
 let pokemonData = [];
