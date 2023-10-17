@@ -130,6 +130,10 @@
     color: black;
 }
 
+.m-left{
+    margin-left: 10%;
+}
+
 @media(max-width: 414px) {
     .info-container-header a{
         font-size: larger;

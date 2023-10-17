@@ -1,13 +1,13 @@
 let currentPokemon;
 let evolutions = [];
 
-
 async function loadPokemon(id) {
     let idFix = id + 1;
     let url = `https://pokeapi.co/api/v2/pokemon/${idFix}`;
     let response = await fetch(url);
     currentPokemon = await response.json();
 
+    await getGender();
     renderPokemonHeaderInfo();
 }
 
@@ -15,13 +15,10 @@ async function loadPokemon(id) {
 function renderPokemonHeaderInfo() {
     let pokemonName = fixFirstLetter(currentPokemon['name']);
     let pokemonTypeLength = currentPokemon['types'];
-
     let currentBackgroundColor = colorFinder();
+
     document.getElementById('pokedex').style.backgroundColor = currentBackgroundColor;
-
     document.getElementById('pokemonType').innerHTML = "";
-
-    //document.getElementById('pokemonInfoImage').src = currentPokemon['sprites']['front_default'];
     document.getElementById('pokemonInfoImage').src = currentPokemon['sprites']['other']['official-artwork']['front_default'];
     document.getElementById('pokemonName').innerHTML = pokemonName;
     document.getElementById('pokemonId').innerHTML = currentPokemon['id'];
@@ -69,22 +66,58 @@ function colorFinder() {
 }
 
 
-function fixFirstLetter(unfixedString) {
-    let firstLetterUppderCase = unfixedString.charAt(0).toUpperCase();
-    let completeString = firstLetterUppderCase + unfixedString.slice(1);
-    return completeString;
+async function getGender() {
+    let femaleUrl = `https://pokeapi.co/api/v2/gender/1/`;
+    let femaleAnswer = await fetch(femaleUrl);
+    let femaleGender = await femaleAnswer.json();
+
+    let maleUrl = `https://pokeapi.co/api/v2/gender/2/`;
+    let maleAnswer = await fetch(maleUrl);
+    let maleGender = await maleAnswer.json();
+
+    let femaleResponse = femaleNumber(femaleGender);
+    let maleResponse = maleNumber(maleGender);
+
+    if (femaleResponse + maleResponse == 2) {
+        return 'Male, Female';
+    } else if (femaleResponse + maleResponse == 1) {
+        if (femaleResponse == 1) {
+            return 'Female';
+        } else if (maleResponse == 1) {
+            return 'Male';
+        }
+    } else {
+        return 'Genderless';
+    }
+
 }
 
 
-function showPokedex() {
-    document.getElementById('pokemonContainer').classList.remove('dp-none');
-    document.getElementById('main-headline').classList.remove('dp-none');
-    document.getElementById('pokedexContainer').classList.add('dp-none');
-    document.getElementById('body').classList.remove('bg-white');
+function femaleNumber(data) {
+    for (let j = 0; j < data['pokemon_species_details'].length; j++) {
+        if (data['pokemon_species_details'][j]['pokemon_species']['name'] == currentPokemon['name']) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 }
 
 
-function renderAboutInfo() {
+function maleNumber(data) {
+    for (let k = 0; k < data['pokemon_species_details'].length; k++) {
+        if (data['pokemon_species_details'][k]['pokemon_species']['name'] == currentPokemon['name']) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+
+
+async function renderAboutInfo() {
     let content = document.getElementById('pokeinfo-details');
 
     content.innerHTML = '';
@@ -101,7 +134,7 @@ function renderAboutInfo() {
                 </div>
                 <div>
                     <div class="render-info-data">n/a</div>
-                    <div class="render-info-data">n/a</div>
+                    <div class="render-info-data">${currentPokemon['height']}</div>
                     <div class="render-info-data">${currentPokemon['weight'] + "00 grams"}</div>
                     <div class="render-info-data">${fixFirstLetter(currentPokemon['abilities'][0]['ability']['name'])}</div>
                 </div>
@@ -116,13 +149,13 @@ function renderAboutInfo() {
                     <div class="render-info-title">Egg Cycle</div>                
                 </div>
                 <div>
-                    <div class="render-info-data">ghfghfgh</div>
+                    <div class="render-info-data">${await getGender()}</div>
                     <div class="render-info-data">X</div>
                     <div class="render-info-data">X</div>                
                 </div>
             </div>
         </div>
-    `;
+        `;
     } else {
         content.innerHTML = `
         <div class="render-info">
@@ -135,7 +168,7 @@ function renderAboutInfo() {
                 </div>
                 <div>
                     <div class="render-info-data">n/a</div>
-                    <div class="render-info-data">n/a</div>
+                    <div class="render-info-data">${currentPokemon['height'] + "0 cm"}</div>
                     <div class="render-info-data">${currentPokemon['weight'] + "00 grams"}</div>
                     <div class="render-info-data">${fixFirstLetter(currentPokemon['abilities'][0]['ability']['name']) + ", " + fixFirstLetter(currentPokemon['abilities'][1]['ability']['name'])}</div>
                 </div>
@@ -150,13 +183,13 @@ function renderAboutInfo() {
                     <div class="render-info-title">Egg Cycle</div>                
                 </div>
                 <div>
-                    <div class="render-info-data">ghfghfgh</div>
+                    <div class="render-info-data">${await getGender()}</div>
                     <div class="render-info-data">X</div>
                     <div class="render-info-data">X</div>                
                 </div>
             </div>   
         </div>
-    `;
+        `;
     }
 }
 
@@ -195,7 +228,6 @@ function renderBaseStatsInfo() {
                     <div class="render-info-data">n/a</div>              
                 </div>
             </div>
-            
         </div>
     `;
 }
@@ -294,38 +326,28 @@ async function renderEvolutionInfo() {
 async function renderMovesInfo() {
     let content = document.getElementById('pokeinfo-details');
 
-    for (let i = 1; i <= 303; i++) { //in 303 steht kein Pokemon dabei, deshalb eig unnötig
-        let url = `https://pokeapi.co/api/v2/ability/${i}/`;
-        let response = await fetch(url);
-        let abilities = await response.json();
+    content.innerHTML = ``;
 
-        for (let j = 0; j < abilities['pokemon'].length; j++)
-        if (abilities['pokemon'][j]['pokemon']['name'] == currentPokemon['name']) {
-            content.innerHTML = `
-                <div class="render-info">
-                    <div class="render-info-title c-black">
-                        Ability
-                    </div>
-                    <div>
-                        ${fixFirstLetter(abilities['name'])}
-                    </div>
-                    
-                    <span class="render-info-second-headline">Description</span>
-
-                    <div class="render-info-second-container">
-                        <div class="render-info-measures">
-                            <div class="render-info-title">Gender</div>
-                            <div class="render-info-title">Egg Groups</div>
-                            <div class="render-info-title">Egg Cycle</div>                
-                        </div>
-                        <div>
-                            <div class="render-info-data">ghfghfgh</div>
-                            <div class="render-info-data">X</div>
-                            <div class="render-info-data">X</div>                
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+    for (let i = 0; i < currentPokemon['moves'].length; i++) {
+        content.innerHTML += `
+            <div class="render-info-title m-left">      
+                ${fixFirstLetter(currentPokemon['moves'][i]['move']['name'])}
+            </div>
+        `;
     }
+}
+
+
+function fixFirstLetter(unfixedString) {
+    let firstLetterUppderCase = unfixedString.charAt(0).toUpperCase();
+    let completeString = firstLetterUppderCase + unfixedString.slice(1);
+    return completeString;
+}
+
+
+function showPokedex() {
+    document.getElementById('pokemonContainer').classList.remove('dp-none');
+    document.getElementById('main-headline').classList.remove('dp-none');
+    document.getElementById('pokedexContainer').classList.add('dp-none');
+    document.getElementById('body').classList.remove('bg-white');
 }
