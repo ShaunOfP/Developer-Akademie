@@ -1,8 +1,8 @@
-let howManyPokemon = 20; //1010 aktuelle anzahl der Pokemon im Pokedex
+let howManyPokemon = 90; //1010 aktuelle anzahl der Pokemon im Pokedex
 let allPokemon = [];
 let allPokemonFixedFirst = [];
 let pokemonData = [];
-let allPokemonData = [];
+let pokeNameColorID = [];
 let pokemonID = 1;
 
 async function initMain() {
@@ -88,8 +88,7 @@ async function renderPokemonInfo() {
             `;
         }
 
-        let backgroundColor = allPokemonData[j];
-        //document.getElementById(`pokeInfoCard${j}`).style.backgroundColor = backgroundColor['color']; //alte Farben, find ich nicht so nice
+        let backgroundColor = pokeNameColorID[j];
 
         switch (backgroundColor['color']) {
             case 'red':
@@ -176,7 +175,7 @@ async function pushColorDataToArray() {
                         'color': colorResponse['name']
                     };
 
-                    allPokemonData.push(dataFeed);
+                    pokeNameColorID.push(dataFeed);
                     pokemonID++;
                 }
             }

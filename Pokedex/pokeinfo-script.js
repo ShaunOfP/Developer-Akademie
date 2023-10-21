@@ -1,5 +1,4 @@
 let currentPokemon;
-let evolutions = [];
 let evolutionFormsCurrentPokemon = [];
 let everySinglePokeInfo = [];
 
@@ -12,6 +11,7 @@ async function loadPokemon(id) {
 
     await getGender();
     await gatherAllInformation();
+    await pushEvolutionsToArray();
     renderPokemonHeaderInfo();
 }
 
@@ -34,14 +34,13 @@ function renderPokemonHeaderInfo() {
         document.getElementById('pokemonType').appendChild(typeDiv).classList.add("pokemon-info-type-styling");
     }
     renderAboutInfo();
-    pushEvolutionsToArray();
 }
 
 
 function colorFinder() {
     for (let i = 0; i < allPokemon.length; i++) {
-        if (allPokemonData[i]['name'] == currentPokemon['name']) {
-            let PokeInfoBgColor = allPokemonData[i]['color'];
+        if (pokeNameColorID[i]['name'] == currentPokemon['name']) {
+            let PokeInfoBgColor = pokeNameColorID[i]['color'];
             switch (PokeInfoBgColor) {
                 case 'red':
                     return '#a51212';
@@ -250,7 +249,7 @@ function renderBaseStatsInfo() {
 
 async function pushEvolutionsToArray() {
     //543
-    for (let i = 1; i <= 27; i++) {
+    for (let i = 1; i <= 543; i++) {
         if (i == 210 || i == 222 || i == 225 || i == 226 || i == 227 || i == 231 || i == 238 || i == 251) {
             continue;
         }
@@ -307,8 +306,51 @@ async function renderEvolutionInfo() {
     let content = document.getElementById('pokeinfo-details');
 
     for (let i = 0; i < evolutionFormsCurrentPokemon.length; i++) {
-        if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['baseForm']) {
-            content.innerHTML = `
+        if (evolutionFormsCurrentPokemon[i]['firstEvolution'] == '') {
+            if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['baseForm']) {
+                content.innerHTML = `
+                <div class="render-info">
+                    There are no evolutions for ${fixFirstLetter(currentPokemon['name'])}
+                </div>
+            `;
+            }
+        } else if (evolutionFormsCurrentPokemon[i]['secondEvolution'] == '') {
+            if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['baseForm']) {
+                content.innerHTML = `
+                    <div class="render-info">
+                    <span>evolves to:</span>
+                        <div class="render-evolution-info">
+                            <div class="evolve-frame">
+                                <div>
+                                    <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
+                                </div>
+                                <div class="evolution-box-text">
+                                    ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['firstEvolution'])}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['firstEvolution']){
+                content.innerHTML = `
+                    <div class="render-info">
+                    <span>evolves to:</span>
+                        <div class="render-evolution-info">
+                            <div class="evolve-frame">
+                                <div>
+                                    <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
+                                </div>
+                                <div class="evolution-box-text">
+                                    ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['baseForm'])}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        } else {
+            if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['baseForm']) {
+                content.innerHTML = `
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
@@ -331,9 +373,9 @@ async function renderEvolutionInfo() {
                     </div>
                 </div>
                 `;
-            break;
-        } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['firstEvolution']) {
-            content.innerHTML = `
+                break;
+            } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['firstEvolution']) {
+                content.innerHTML = `
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
@@ -356,9 +398,9 @@ async function renderEvolutionInfo() {
                     </div>
                 </div>
                 `;
-            break;
-        } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['secondEvolution']) {
-            content.innerHTML = `
+                break;
+            } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['secondEvolution']) {
+                content.innerHTML = `
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
@@ -381,7 +423,8 @@ async function renderEvolutionInfo() {
                     </div>
                 </div>
                 `;
-            break;
+                break;
+            }
         }
     }
 }
