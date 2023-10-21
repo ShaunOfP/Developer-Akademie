@@ -182,8 +182,8 @@ async function renderAboutInfo() {
                 </div>
                 <div>
                     <div class="render-info-data">n/a</div>
-                    <div class="render-info-data">${currentPokemon['height'] + "0 cm"}</div>
-                    <div class="render-info-data">${currentPokemon['weight'] + "00 grams"}</div>
+                    <div class="render-info-data">${currentPokemon['height']/10 + " meters"}</div>
+                    <div class="render-info-data">${currentPokemon['weight']/10 + " kg"}</div>
                     <div class="render-info-data">${fixFirstLetter(currentPokemon['abilities'][0]['ability']['name']) + ", " + fixFirstLetter(currentPokemon['abilities'][1]['ability']['name'])}</div>
                 </div>
             </div>
