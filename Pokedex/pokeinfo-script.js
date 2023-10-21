@@ -11,6 +11,7 @@ async function loadPokemon(id) {
     currentPokemon = await response.json();
 
     await getGender();
+    await gatherAllInformation();
     renderPokemonHeaderInfo();
 }
 
@@ -33,6 +34,7 @@ function renderPokemonHeaderInfo() {
         document.getElementById('pokemonType').appendChild(typeDiv).classList.add("pokemon-info-type-styling");
     }
     renderAboutInfo();
+    pushEvolutionsToArray();
 }
 
 
@@ -91,6 +93,19 @@ async function getGender() {
         }
     } else {
         return 'Genderless';
+    }
+}
+
+
+async function gatherAllInformation() {
+    for (let i = 0; i < allPokemon.length; i++) {
+        let singlePokemon = allPokemon[i];
+
+        let url = `https://pokeapi.co/api/v2/pokemon/${singlePokemon}`;
+        let response = await fetch(url);
+        let responseJson = await response.json();
+
+        everySinglePokeInfo.push(responseJson);
     }
 }
 
@@ -191,8 +206,6 @@ async function renderAboutInfo() {
         </div>
         `;
     }
-    pushEvolutionsToArray();
-    gatherAllInformation();
 }
 
 
@@ -250,21 +263,30 @@ async function pushEvolutionsToArray() {
             let dataFeed = {
                 'baseForm': evolutionInfo['chain']['species']['name'],
                 'firstEvolution': '',
-                'secondEvolution': ''
+                'secondEvolution': '',
+                'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
+                'firstEvoSprite': '',
+                'secondEvoSprite': ''
             };
             evolutionFormsCurrentPokemon.push(dataFeed);
         } else if (evolutionInfo['chain']['evolves_to'][0]['evolves_to'].length != 0) {
             let dataFeed = {
                 'baseForm': evolutionInfo['chain']['species']['name'],
                 'firstEvolution': evolutionInfo['chain']['evolves_to'][0]['species']['name'],
-                'secondEvolution': evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']
+                'secondEvolution': evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'],
+                'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
+                'firstEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['species']['name']),
+                'secondEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'])
             };
             evolutionFormsCurrentPokemon.push(dataFeed);
         } else {
             let dataFeed = {
                 'baseForm': evolutionInfo['chain']['species']['name'],
                 'firstEvolution': evolutionInfo['chain']['evolves_to'][0]['species']['name'],
-                'secondEvolution': ''
+                'secondEvolution': '',
+                'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
+                'firstEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['species']['name']),
+                'secondEvoSprite': ''
             }
             evolutionFormsCurrentPokemon.push(dataFeed);
         }
@@ -272,15 +294,11 @@ async function pushEvolutionsToArray() {
 }
 
 
-async function gatherAllInformation() {
-    for (let i = 0; i < allPokemon.length; i++) {
-        let singlePokemon = allPokemon[i];
-
-        let url = `https://pokeapi.co/api/v2/pokemon/${singlePokemon}`;
-        let response = await fetch(url);
-        let responseJson = await response.json();
-
-        everySinglePokeInfo.push(responseJson);
+function updateSpritesInArray(nameForImage){
+    for(let i = 0; i < everySinglePokeInfo.length; i++){
+        if (nameForImage == everySinglePokeInfo[i]['name']){
+            return everySinglePokeInfo[i]['sprites']['front_default'];
+        }
     }
 }
 
@@ -299,26 +317,38 @@ async function renderEvolutionInfo() {
                     <div class="render-evolution-info">
                         <div class="evolve-frame">
                             <div>
-                                <img src=${firstEvolutionInfo['sprites']['front_default']}>
+                                <img src=${loadImage(evolutionFormsCurrentPokemon[j]['firstEvolution'])}>
                             </div>
                             <div class="evolution-box-text">
-                                ${fixFirstLetter(firstEvolution)}
+                                ${fixFirstLetter(evolutionFormsCurrentPokemon[j]['firstEvolution'])}
                             </div>
                         </div>
                         <div class="evolve-frame">
                             <div>
-                                <img src=${secondEvolutionInfo['sprites']['front_default']}>
+                                <img src=${loadImage(evolutionFormsCurrentPokemon[j]['secondEvolution'])}>
                             </div>
                             <div class="evolution-box-text">
-                                ${fixFirstLetter(secondEvolution)}
+                                ${fixFirstLetter(evolutionFormsCurrentPokemon[j]['secondEvolution'])}
                             </div>
                         </div>
                     </div>
                 </div>
                 `;
+                break;
             } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['firstEvolution']) {
 
+            } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['secondEvolution']) {
+
             }
+        }
+    }
+}
+
+
+function loadImage(evoName) {
+    for (let i = 0; i < everySinglePokeInfo.length; i++) {
+        if (everySinglePokeInfo[i]['name'] == evoName) {
+            return everySinglePokeInfo[i]['sprites']['front_default'];
         }
     }
 
@@ -333,126 +363,126 @@ async function renderEvolutionInfo() {
     // let secondResponse = await fetch(secondUrl);
     // let secondEvolutionInfo = await secondResponse.json();
 
-    if (evolutions['chain']['species']['name'] == currentPokemon['name']) {
-        if (evolutions['chain']['evolves_to'][0]['evolves_to'].length == 0) {
-            content.innerHTML = `
-                <div class="render-info">
-                    <span>evolves to:</span>
-                    <div class="render-evolution-info">
-                        <div class="evolve-frame">
-                            <div>
-                                <img src=${firstEvolutionInfo['sprites']['front_default']}>
-                            </div>
-                            <div class="evolution-box-text">
-                                ${fixFirstLetter(firstEvolution)}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `;
-        } else {
-            content.innerHTML = `
-                <div class="render-info">
-                    <span>evolves to:</span>
-                    <div class="render-evolution-info">
-                        <div class="evolve-frame">
-                            <div>
-                                <img src=${firstEvolutionInfo['sprites']['front_default']}>
-                            </div>
-                            <div class="evolution-box-text">
-                                ${fixFirstLetter(firstEvolution)}
-                            </div>
-                        </div>
-                        <div class="evolve-frame">
-                            <div>
-                                <img src=${secondEvolutionInfo['sprites']['front_default']}>
-                            </div>
-                            <div class="evolution-box-text">
-                                ${fixFirstLetter(secondEvolution)}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `;
-        }
-    } else if (currentPokemon['name'] == evolutions['chain']['evolves_to'][0]['species']['name']) {
-        //erste entwicklung
-        let baseUrl = `https://pokeapi.co/api/v2/pokemon/${currentPokemon['id'] - 1}`;
-        let baseResponse = await fetch(baseUrl);
-        let baseForm = await baseResponse.json();
+    // if (evolutions['chain']['species']['name'] == currentPokemon['name']) {
+    //     if (evolutions['chain']['evolves_to'][0]['evolves_to'].length == 0) {
+    //         content.innerHTML = `
+    //             <div class="render-info">
+    //                 <span>evolves to:</span>
+    //                 <div class="render-evolution-info">
+    //                     <div class="evolve-frame">
+    //                         <div>
+    //                             <img src=${firstEvolutionInfo['sprites']['front_default']}>
+    //                         </div>
+    //                         <div class="evolution-box-text">
+    //                             ${fixFirstLetter(firstEvolution)}
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             `;
+    //     } else {
+    //         content.innerHTML = `
+    //             <div class="render-info">
+    //                 <span>evolves to:</span>
+    //                 <div class="render-evolution-info">
+    //                     <div class="evolve-frame">
+    //                         <div>
+    //                             <img src=${firstEvolutionInfo['sprites']['front_default']}>
+    //                         </div>
+    //                         <div class="evolution-box-text">
+    //                             ${fixFirstLetter(firstEvolution)}
+    //                         </div>
+    //                     </div>
+    //                     <div class="evolve-frame">
+    //                         <div>
+    //                             <img src=${secondEvolutionInfo['sprites']['front_default']}>
+    //                         </div>
+    //                         <div class="evolution-box-text">
+    //                             ${fixFirstLetter(secondEvolution)}
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             `;
+    //     }
+    // } else if (currentPokemon['name'] == evolutions['chain']['evolves_to'][0]['species']['name']) {
+    //     //erste entwicklung
+    //     let baseUrl = `https://pokeapi.co/api/v2/pokemon/${currentPokemon['id'] - 1}`;
+    //     let baseResponse = await fetch(baseUrl);
+    //     let baseForm = await baseResponse.json();
 
-        content.innerHTML = `
-            <div class="render-info">
-                <span>evolves to:</span>
-                <div class="render-evolution-info">
-                    <div class="evolve-frame">
-                        <div>
-                            <img src=${baseForm['sprites']['front_default']}>
-                        </div>
-                        <div class="evolution-box-text">
-                            ${fixFirstLetter(baseForm['name'])}
-                        </div>
-                    </div>
-                    <div class="evolve-frame">
-                        <div>
-                            <img src=${secondEvolutionInfo['sprites']['front_default']}>
-                        </div>
-                        <div class="evolution-box-text">
-                            ${fixFirstLetter(secondEvolution)}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-    } else if (currentPokemon['name'] == evolutions['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']) {
-        //zweite Entwicklung
-        let baseUrl = `https://pokeapi.co/api/v2/pokemon/${currentPokemon['id'] - 2}`;
-        let baseResponse = await fetch(baseUrl);
-        let baseForm = await baseResponse.json();
+    //     content.innerHTML = `
+    //         <div class="render-info">
+    //             <span>evolves to:</span>
+    //             <div class="render-evolution-info">
+    //                 <div class="evolve-frame">
+    //                     <div>
+    //                         <img src=${baseForm['sprites']['front_default']}>
+    //                     </div>
+    //                     <div class="evolution-box-text">
+    //                         ${fixFirstLetter(baseForm['name'])}
+    //                     </div>
+    //                 </div>
+    //                 <div class="evolve-frame">
+    //                     <div>
+    //                         <img src=${secondEvolutionInfo['sprites']['front_default']}>
+    //                     </div>
+    //                     <div class="evolution-box-text">
+    //                         ${fixFirstLetter(secondEvolution)}
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         `;
+    // } else if (currentPokemon['name'] == evolutions['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']) {
+    //     //zweite Entwicklung
+    //     let baseUrl = `https://pokeapi.co/api/v2/pokemon/${currentPokemon['id'] - 2}`;
+    //     let baseResponse = await fetch(baseUrl);
+    //     let baseForm = await baseResponse.json();
 
-        content.innerHTML = `
-            <div class="render-info">
-                <span>evolves to:</span>
-                <div class="render-evolution-info">
-                    <div class="evolve-frame">
-                        <div>
-                            <img src=${baseForm['sprites']['front_default']}>
-                        </div>
-                        <div class="evolution-box-text">
-                            ${fixFirstLetter(baseForm['name'])}
-                        </div>
-                    </div>
-                    <div class="evolve-frame">
-                        <div>
-                            <img src=${firstEvolutionInfo['sprites']['front_default']}>
-                        </div>
-                        <div class="evolution-box-text">
-                            ${fixFirstLetter(firstEvolution)}
-                        </div>
-                    </div>
-                </div>
-            </div>            
-            `;
-    } else {
-        content.innerHTML = `
-                <div class="render-info">
-                    <div>
-                        <b>There are no evolutions for ${fixFirstLetter(currentPokemon['name'])}</b>
-                    </div>
-                    
-                    <span class="render-info-second-headline">Type defenses</span>
+    //     content.innerHTML = `
+    //         <div class="render-info">
+    //             <span>evolves to:</span>
+    //             <div class="render-evolution-info">
+    //                 <div class="evolve-frame">
+    //                     <div>
+    //                         <img src=${baseForm['sprites']['front_default']}>
+    //                     </div>
+    //                     <div class="evolution-box-text">
+    //                         ${fixFirstLetter(baseForm['name'])}
+    //                     </div>
+    //                 </div>
+    //                 <div class="evolve-frame">
+    //                     <div>
+    //                         <img src=${firstEvolutionInfo['sprites']['front_default']}>
+    //                     </div>
+    //                     <div class="evolution-box-text">
+    //                         ${fixFirstLetter(firstEvolution)}
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>            
+    //         `;
+    // } else {
+    //     content.innerHTML = `
+    //             <div class="render-info">
+    //                 <div>
+    //                     <b>There are no evolutions for ${fixFirstLetter(currentPokemon['name'])}</b>
+    //                 </div>
 
-                    <div class="render-info-second-container">
-                        <div class="render-info-measures">
-                            <div class="render-info-title">n/a</div>              
-                        </div>
-                        <div>
-                            <div class="render-info-data">n/a</div>              
-                        </div>
-                    </div> 
-                </div>
-            `;
-    }
+    //                 <span class="render-info-second-headline">Type defenses</span>
+
+    //                 <div class="render-info-second-container">
+    //                     <div class="render-info-measures">
+    //                         <div class="render-info-title">n/a</div>              
+    //                     </div>
+    //                     <div>
+    //                         <div class="render-info-data">n/a</div>              
+    //                     </div>
+    //                 </div> 
+    //             </div>
+    //         `;
+    // }
 }
 
 
