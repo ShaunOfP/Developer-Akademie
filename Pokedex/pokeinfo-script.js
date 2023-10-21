@@ -317,7 +317,7 @@ async function renderEvolutionInfo() {
                     <div class="render-evolution-info">
                         <div class="evolve-frame">
                             <div>
-                                <img src=${loadImage(evolutionFormsCurrentPokemon[j]['firstEvolution'])}>
+                                <img src=${evolutionFormsCurrentPokemon[j]['firstEvoSprite']}>
                             </div>
                             <div class="evolution-box-text">
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[j]['firstEvolution'])}
@@ -325,7 +325,7 @@ async function renderEvolutionInfo() {
                         </div>
                         <div class="evolve-frame">
                             <div>
-                                <img src=${loadImage(evolutionFormsCurrentPokemon[j]['secondEvolution'])}>
+                                <img src=${evolutionFormsCurrentPokemon[j]['secondEvoSprite']}>
                             </div>
                             <div class="evolution-box-text">
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[j]['secondEvolution'])}
@@ -343,15 +343,6 @@ async function renderEvolutionInfo() {
         }
     }
 }
-
-
-function loadImage(evoName) {
-    for (let i = 0; i < everySinglePokeInfo.length; i++) {
-        if (everySinglePokeInfo[i]['name'] == evoName) {
-            return everySinglePokeInfo[i]['sprites']['front_default'];
-        }
-    }
-
 
     // let firstEvolution = evolutions['chain']['evolves_to'][0]['species']['name'];
     // let firstUrl = `https://pokeapi.co/api/v2/pokemon/${firstEvolution}`;
@@ -483,7 +474,6 @@ function loadImage(evoName) {
     //             </div>
     //         `;
     // }
-}
 
 
 
