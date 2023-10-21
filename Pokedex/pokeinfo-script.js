@@ -194,7 +194,7 @@ async function renderAboutInfo() {
                 <div class="render-info-measures">
                     <div class="render-info-title">Gender</div>
                     <div class="render-info-title">Egg Groups</div>
-                    <div class="render-info-title">Egg Cycle</div>                
+                    <div class="render-info-title">Egg Cycle</div>
                 </div>
                 <div>
                     <div class="render-info-data">${await getGender()}</div>
@@ -215,8 +215,8 @@ function renderBaseStatsInfo() {
         <div class="render-info">
             <div class="render-info-overall">
                 <div class="render-info-measures">
-                    <div class="render-info-title">HP</div>                    
-                    <div class="render-info-title">Attack</div>                    
+                    <div class="render-info-title">HP</div>
+                    <div class="render-info-title">Attack</div>         
                     <div class="render-info-title">Defense</div>
                     <div class="render-info-title">Sp. Atk</div>
                     <div class="render-info-title">Sp. Def</div>
@@ -239,7 +239,7 @@ function renderBaseStatsInfo() {
                     <div class="render-info-title">n/a</div>              
                 </div>
                 <div>
-                    <div class="render-info-data">n/a</div>              
+                    <div class="render-info-data">n/a</div>
                 </div>
             </div>
         </div>
