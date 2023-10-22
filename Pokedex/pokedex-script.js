@@ -7,7 +7,7 @@ let pokemonID = 1;
 
 async function initMain() {
     await loadAllPokemon();
-    mainFixFirstLetter();
+    fixPokemonFirstLetter();
     renderPokemonInfo();
 }
 
@@ -25,7 +25,7 @@ async function loadAllPokemon() {
 }
 
 
-function mainFixFirstLetter() {
+function fixPokemonFirstLetter() {
     for (let k = 0; k < allPokemon.length; k++) {
         let pokemonName = allPokemon[k];
 

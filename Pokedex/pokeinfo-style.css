@@ -8,6 +8,10 @@
     padding-right: 20px;
 }
 
+.txt-center{
+    text-align: center;
+}
+
 .ion-arrow{
     margin-top: 15px;
     height: 40px;
