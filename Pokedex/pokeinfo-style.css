@@ -126,6 +126,10 @@
     margin-right: 10px;
 }
 
+.evolve-frame:hover{
+    cursor: pointer;
+}
+
 .evolution-box-text{
     text-align: center;
 }

@@ -51,7 +51,7 @@ async function renderPokemonInfo() {
 
         if (pokeTypeLength == 1) {
             pokeContainer.innerHTML += `
-            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j})">
+            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j+1})">
                 <div class="pokemon-card-header">
                     <div>
                         ${allPokemonFixedFirst[j]}
@@ -68,7 +68,7 @@ async function renderPokemonInfo() {
             `;
         } else {
             pokeContainer.innerHTML += `
-            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j})">
+            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j+1})">
                 <div class="pokemon-card-header">
                     <div>
                         ${allPokemonFixedFirst[j]}

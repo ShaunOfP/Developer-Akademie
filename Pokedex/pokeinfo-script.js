@@ -4,8 +4,7 @@ let everySinglePokeInfo = [];
 
 
 async function loadPokemon(id) {
-    let idFix = id + 1;
-    let url = `https://pokeapi.co/api/v2/pokemon/${idFix}`;
+    let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     let response = await fetch(url);
     currentPokemon = await response.json();
 
@@ -182,8 +181,8 @@ async function renderAboutInfo() {
                 </div>
                 <div>
                     <div class="render-info-data">n/a</div>
-                    <div class="render-info-data">${currentPokemon['height']/10 + " meters"}</div>
-                    <div class="render-info-data">${currentPokemon['weight']/10 + " kg"}</div>
+                    <div class="render-info-data">${currentPokemon['height'] / 10 + " meters"}</div>
+                    <div class="render-info-data">${currentPokemon['weight'] / 10 + " kg"}</div>
                     <div class="render-info-data">${fixFirstLetter(currentPokemon['abilities'][0]['ability']['name']) + ", " + fixFirstLetter(currentPokemon['abilities'][1]['ability']['name'])}</div>
                 </div>
             </div>
@@ -199,9 +198,9 @@ async function renderAboutInfo() {
                 <div>
                     <div class="render-info-data">${await getGender()}</div>
                     <div class="render-info-data">X</div>
-                    <div class="render-info-data">X</div>                
+                    <div class="render-info-data">X</div>
                 </div>
-            </div>   
+            </div>
         </div>
         `;
     }
@@ -248,8 +247,8 @@ function renderBaseStatsInfo() {
 
 
 async function pushEvolutionsToArray() {
-    //543
-    for (let i = 1; i <= 543; i++) {
+    //if code runs slow, decrease length (max value 543)
+    for (let i = 1; i <= 40; i++) {
         if (i == 210 || i == 222 || i == 225 || i == 226 || i == 227 || i == 231 || i == 238 || i == 251) {
             continue;
         }
@@ -320,7 +319,7 @@ async function renderEvolutionInfo() {
                     <div class="render-info">
                     <span>evolves to:</span>
                         <div class="render-evolution-info">
-                            <div class="evolve-frame">
+                            <div class="evolve-frame" id="firstEvolutionElement">
                                 <div>
                                     <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
                                 </div>
@@ -331,12 +330,12 @@ async function renderEvolutionInfo() {
                         </div>
                     </div>
                 `;
-            } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['firstEvolution']){
+            } else if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['firstEvolution']) {
                 content.innerHTML = `
                     <div class="render-info">
                     <span>evolves to:</span>
                         <div class="render-evolution-info">
-                            <div class="evolve-frame">
+                            <div class="evolve-frame" id="baseFormElement">
                                 <div>
                                     <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
                                 </div>
@@ -354,7 +353,7 @@ async function renderEvolutionInfo() {
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
-                        <div class="evolve-frame">
+                        <div class="evolve-frame" id="firstEvolutionElement">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
                             </div>
@@ -362,7 +361,7 @@ async function renderEvolutionInfo() {
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['firstEvolution'])}
                             </div>
                         </div>
-                        <div class="evolve-frame">
+                        <div class="evolve-frame" id="secondEvolutionElement">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['secondEvoSprite']}>
                             </div>
@@ -379,7 +378,7 @@ async function renderEvolutionInfo() {
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
-                        <div class="evolve-frame">
+                        <div class="evolve-frame" id="baseFormElement">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
                             </div>
@@ -387,7 +386,7 @@ async function renderEvolutionInfo() {
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['baseForm'])}
                             </div>
                         </div>
-                        <div class="evolve-frame">
+                        <div class="evolve-frame" id="secondEvolutionElement">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['secondEvoSprite']}>
                             </div>
@@ -404,7 +403,7 @@ async function renderEvolutionInfo() {
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
-                        <div class="evolve-frame">
+                        <div class="evolve-frame" id="baseFormElement">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
                             </div>
@@ -412,7 +411,7 @@ async function renderEvolutionInfo() {
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['baseForm'])}
                             </div>
                         </div>
-                        <div class="evolve-frame">
+                        <div class="evolve-frame" id="firstEvolutionElement">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
                             </div>
@@ -425,6 +424,25 @@ async function renderEvolutionInfo() {
                 `;
                 break;
             }
+        }
+        document.getElementById('baseFormElement').addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['baseForm']) });
+        document.getElementById('firstEvolutionElement').addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['firstEvolution']) });
+        document.getElementById('secondEvolutionElement').addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['secondEvolution']) });
+    }
+}
+
+
+//EventListener doesnt work
+
+
+async function changeCurrentPokemon(newID) {
+    for (let i = 0; i <= everySinglePokeInfo.length; i++) {
+        if (newID == everySinglePokeInfo[i]['name']) {
+            currentPokemon = newID;
+            await loadPokemon(everySinglePokeInfo[i]['id']);
+            break;
+        } else {
+            return;
         }
     }
 }
