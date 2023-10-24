@@ -52,6 +52,7 @@ body {
 .pokemon-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .poke-Info-Card {
@@ -111,19 +112,29 @@ body {
     background-color: white;
 }
 
-.pokemon-container{
-    margin-left: 10px;
-}
-
 @media(max-width: 414px) {
     .poke-Info-Card{
-        height: 100px;
-        width: 150px;
-    }
-    .pokemon-card-header{
-        margin-top: -5px;
+        height: 200px;
+        width: 80%;
     }
     .pokemon-type-styling{
-        width: 50px;
+        width: 150px;
+        height: 60px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .pokedex-image{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .pokedex-image img{
+        height: 140px;
+        width: 140px;
+    }
+    .max-height{
+        max-height: 60px;
     }
 }

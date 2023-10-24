@@ -1,6 +1,6 @@
-let howManyPokemon = 90; //1010 aktuelle anzahl der Pokemon im Pokedex
+let howManyPokemon = 20; //1010 aktuelle anzahl der Pokemon im Pokedex
 let allPokemon = [];
-let allPokemonFixedFirst = [];
+let allPokemonFixedFirstLetter = [];
 let pokemonData = [];
 let pokeNameColorID = [];
 let pokemonID = 1;
@@ -30,7 +30,7 @@ function fixPokemonFirstLetter() {
         let pokemonName = allPokemon[k];
 
         pokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
-        allPokemonFixedFirst.push(pokemonName);
+        allPokemonFixedFirstLetter.push(pokemonName);
     }
 }
 
@@ -54,7 +54,7 @@ async function renderPokemonInfo() {
             <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j+1})">
                 <div class="pokemon-card-header">
                     <div>
-                        ${allPokemonFixedFirst[j]}
+                        ${allPokemonFixedFirstLetter[j]}
                     </div>
                     <div>
                         ${j + 1}
@@ -62,7 +62,7 @@ async function renderPokemonInfo() {
                 </div>
                 <div class="dp-flex-space-between">
                     <div class="pokemon-type-styling max-height">${pokeType}</div>
-                    <div><img src=${pokeImage}></div>
+                    <div class="pokedex-image"><img src=${pokeImage}></div>
                 </div>
             </div>
             `;
@@ -71,7 +71,7 @@ async function renderPokemonInfo() {
             <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j+1})">
                 <div class="pokemon-card-header">
                     <div>
-                        ${allPokemonFixedFirst[j]}
+                        ${allPokemonFixedFirstLetter[j]}
                     </div>
                     <div>
                         ${j + 1}
@@ -82,7 +82,7 @@ async function renderPokemonInfo() {
                         <div class="pokemon-type-styling">${pokeType[0]}</div>
                         <div class="pokemon-type-styling">${pokeType[1]}</div>
                     </div>
-                    <div><img src=${pokeImage}></div>
+                    <div class="pokedex-image"><img src=${pokeImage}></div>
                 </div>
             </div>
             `;
@@ -125,6 +125,7 @@ async function renderPokemonInfo() {
                 alert("BGC not found!");
         }
     }
+    await gatherAllInformation();
 }
 
 

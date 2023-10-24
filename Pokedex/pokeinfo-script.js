@@ -9,7 +9,7 @@ async function loadPokemon(id) {
     currentPokemon = await response.json();
 
     await getGender();
-    await gatherAllInformation();
+    // await gatherAllInformation();
     await pushEvolutionsToArray();
     renderPokemonHeaderInfo();
 }
@@ -70,16 +70,10 @@ function colorFinder() {
 
 
 async function getGender() {
-    let femaleUrl = `https://pokeapi.co/api/v2/gender/1/`;
-    let femaleAnswer = await fetch(femaleUrl);
-    let femaleGender = await femaleAnswer.json();
-
-    let maleUrl = `https://pokeapi.co/api/v2/gender/2/`;
-    let maleAnswer = await fetch(maleUrl);
-    let maleGender = await maleAnswer.json();
-
-    let femaleResponse = femaleNumber(femaleGender);
-    let maleResponse = maleNumber(maleGender);
+    let femaleGenderNumber = await fetchFemaleGender();
+    let maleGenderNumber = await fetchMaleGender();
+    let femaleResponse = femaleNumber(femaleGenderNumber);
+    let maleResponse = maleNumber(maleGenderNumber);
 
     if (femaleResponse + maleResponse == 2) {
         return 'Male, Female';
@@ -95,16 +89,19 @@ async function getGender() {
 }
 
 
-async function gatherAllInformation() {
-    for (let i = 0; i < allPokemon.length; i++) {
-        let singlePokemon = allPokemon[i];
+async function fetchFemaleGender(){
+    let femaleUrl = `https://pokeapi.co/api/v2/gender/1/`;
+    let femaleAnswer = await fetch(femaleUrl);
+    let femaleGender = await femaleAnswer.json();
+    return femaleGender;
+}
 
-        let url = `https://pokeapi.co/api/v2/pokemon/${singlePokemon}`;
-        let response = await fetch(url);
-        let responseJson = await response.json();
 
-        everySinglePokeInfo.push(responseJson);
-    }
+async function fetchMaleGender(){
+    let maleUrl = `https://pokeapi.co/api/v2/gender/2/`;
+    let maleAnswer = await fetch(maleUrl);
+    let maleGender = await maleAnswer.json();
+    return maleGender;
 }
 
 
@@ -126,6 +123,19 @@ function maleNumber(data) {
         } else {
             return 0;
         }
+    }
+}
+
+
+async function gatherAllInformation() {
+    for (let i = 0; i < allPokemon.length; i++) {
+        let singlePokemon = allPokemon[i];
+
+        let url = `https://pokeapi.co/api/v2/pokemon/${singlePokemon}`;
+        let response = await fetch(url);
+        let responseJson = await response.json();
+
+        everySinglePokeInfo.push(responseJson);
     }
 }
 
@@ -248,7 +258,7 @@ function renderBaseStatsInfo() {
 
 async function pushEvolutionsToArray() {
     //if code runs slow, decrease length (max value 543)
-    for (let i = 1; i <= 40; i++) {
+    for (let i = 1; i <= 20; i++) {
         if (i == 210 || i == 222 || i == 225 || i == 226 || i == 227 || i == 231 || i == 238 || i == 251) {
             continue;
         }
@@ -258,37 +268,55 @@ async function pushEvolutionsToArray() {
         let evolutionInfo = await evolutionResponse.json();
 
         if (evolutionInfo['chain']['evolves_to'] == 0) {
-            let dataFeed = {
-                'baseForm': evolutionInfo['chain']['species']['name'],
-                'firstEvolution': '',
-                'secondEvolution': '',
-                'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
-                'firstEvoSprite': '',
-                'secondEvoSprite': ''
-            };
-            evolutionFormsCurrentPokemon.push(dataFeed);
+            let newDataFeed = createFeedForNoEvolutions(evolutionInfo);
+            evolutionFormsCurrentPokemon.push(newDataFeed);
         } else if (evolutionInfo['chain']['evolves_to'][0]['evolves_to'].length != 0) {
-            let dataFeed = {
-                'baseForm': evolutionInfo['chain']['species']['name'],
-                'firstEvolution': evolutionInfo['chain']['evolves_to'][0]['species']['name'],
-                'secondEvolution': evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'],
-                'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
-                'firstEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['species']['name']),
-                'secondEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'])
-            };
-            evolutionFormsCurrentPokemon.push(dataFeed);
+            let newDataFeed = createFeedForOneEvolution(evolutionInfo);
+            evolutionFormsCurrentPokemon.push(newDataFeed);
         } else {
-            let dataFeed = {
-                'baseForm': evolutionInfo['chain']['species']['name'],
-                'firstEvolution': evolutionInfo['chain']['evolves_to'][0]['species']['name'],
-                'secondEvolution': '',
-                'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
-                'firstEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['species']['name']),
-                'secondEvoSprite': ''
-            }
-            evolutionFormsCurrentPokemon.push(dataFeed);
+            let newDataFeed = createFeedForTwoEvolutions(evolutionInfo);
+            evolutionFormsCurrentPokemon.push(newDataFeed);
         }
     }
+}
+
+
+function createFeedForNoEvolutions(evolutionInfo){
+    let dataFeed = {
+        'baseForm': evolutionInfo['chain']['species']['name'],
+        'firstEvolution': '',
+        'secondEvolution': '',
+        'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
+        'firstEvoSprite': '',
+        'secondEvoSprite': ''
+    };
+    return dataFeed;
+}
+
+
+function createFeedForOneEvolution(evolutionInfo){
+    let dataFeed = {
+        'baseForm': evolutionInfo['chain']['species']['name'],
+        'firstEvolution': evolutionInfo['chain']['evolves_to'][0]['species']['name'],
+        'secondEvolution': evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'],
+        'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
+        'firstEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['species']['name']),
+        'secondEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'])
+    };
+    return dataFeed;
+}
+
+
+function createFeedForTwoEvolutions(evolutionInfo){
+    let dataFeed = {
+        'baseForm': evolutionInfo['chain']['species']['name'],
+        'firstEvolution': evolutionInfo['chain']['evolves_to'][0]['species']['name'],
+        'secondEvolution': '',
+        'baseSprite': updateSpritesInArray(evolutionInfo['chain']['species']['name']),
+        'firstEvoSprite': updateSpritesInArray(evolutionInfo['chain']['evolves_to'][0]['species']['name']),
+        'secondEvoSprite': ''
+    };
+    return dataFeed;
 }
 
 
@@ -301,17 +329,21 @@ function updateSpritesInArray(nameForImage) {
 }
 
 
-async function renderEvolutionInfo() {
+function renderEvolutionInfo() {
     let content = document.getElementById('pokeinfo-details');
 
     for (let i = 0; i < evolutionFormsCurrentPokemon.length; i++) {
+        const baseElementId = `baseFormElement${i}`;
+        const firstElementId = `firstEvolutionElement${i}`;
+        const secondElementId = `secondEvolutionElement${i}`;
+
         if (evolutionFormsCurrentPokemon[i]['firstEvolution'] == '') {
             if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['baseForm']) {
                 content.innerHTML = `
                 <div class="render-info">
                     There are no evolutions for ${fixFirstLetter(currentPokemon['name'])}
                 </div>
-            `;
+                `;
             }
         } else if (evolutionFormsCurrentPokemon[i]['secondEvolution'] == '') {
             if (currentPokemon['name'] == evolutionFormsCurrentPokemon[i]['baseForm']) {
@@ -319,7 +351,7 @@ async function renderEvolutionInfo() {
                     <div class="render-info">
                     <span>evolves to:</span>
                         <div class="render-evolution-info">
-                            <div class="evolve-frame" id="firstEvolutionElement">
+                            <div class="evolve-frame" id="${firstElementId}">
                                 <div>
                                     <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
                                 </div>
@@ -335,7 +367,7 @@ async function renderEvolutionInfo() {
                     <div class="render-info">
                     <span>evolves to:</span>
                         <div class="render-evolution-info">
-                            <div class="evolve-frame" id="baseFormElement">
+                            <div class="evolve-frame" id="${baseElementId}">
                                 <div>
                                     <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
                                 </div>
@@ -353,7 +385,7 @@ async function renderEvolutionInfo() {
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
-                        <div class="evolve-frame" id="firstEvolutionElement">
+                        <div class="evolve-frame" id="${firstElementId}">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
                             </div>
@@ -361,7 +393,7 @@ async function renderEvolutionInfo() {
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['firstEvolution'])}
                             </div>
                         </div>
-                        <div class="evolve-frame" id="secondEvolutionElement">
+                        <div class="evolve-frame" id="${secondElementId}">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['secondEvoSprite']}>
                             </div>
@@ -378,7 +410,7 @@ async function renderEvolutionInfo() {
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
-                        <div class="evolve-frame" id="baseFormElement">
+                        <div class="evolve-frame" id="${baseElementId}">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
                             </div>
@@ -386,7 +418,7 @@ async function renderEvolutionInfo() {
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['baseForm'])}
                             </div>
                         </div>
-                        <div class="evolve-frame" id="secondEvolutionElement">
+                        <div class="evolve-frame" id="${secondElementId}">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['secondEvoSprite']}>
                             </div>
@@ -403,7 +435,7 @@ async function renderEvolutionInfo() {
                 <div class="render-info">
                     <span>evolves to:</span>
                     <div class="render-evolution-info">
-                        <div class="evolve-frame" id="baseFormElement">
+                        <div class="evolve-frame" id="${baseElementId}">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['baseSprite']}>
                             </div>
@@ -411,7 +443,7 @@ async function renderEvolutionInfo() {
                                 ${fixFirstLetter(evolutionFormsCurrentPokemon[i]['baseForm'])}
                             </div>
                         </div>
-                        <div class="evolve-frame" id="firstEvolutionElement">
+                        <div class="evolve-frame" id="${firstElementId}">
                             <div>
                                 <img src=${evolutionFormsCurrentPokemon[i]['firstEvoSprite']}>
                             </div>
@@ -425,12 +457,23 @@ async function renderEvolutionInfo() {
                 break;
             }
         }
-        document.getElementById('baseFormElement').addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['baseForm']) });
-        document.getElementById('firstEvolutionElement').addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['firstEvolution']) });
-        document.getElementById('secondEvolutionElement').addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['secondEvolution']) });
+        // addClickListener(baseElementId, evolutionFormsCurrentPokemon[i]['baseForm']);
+        // addClickListener(firstElementId, evolutionFormsCurrentPokemon[i]['firstEvolution']);
+        // addClickListener(secondElementId, evolutionFormsCurrentPokemon[i]['secondEvolution']);
+
+        // document.getElementById(`baseFormElement${i}`).addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['baseForm']); });
+        // document.getElementById(`firstEvolutionElement${i}`).addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['firstEvolution']); });
+        // document.getElementById(`secondEvolutionElement${i}`).addEventListener("click", () => { changeCurrentPokemon(evolutionFormsCurrentPokemon[i]['secondEvolution']); });
     }
 }
 
+
+// function addClickListener(elementId, targetPokemon) {
+//     const element = document.getElementById(elementId);
+//     element.addEventListener("click", () => {
+//         changeCurrentPokemon(targetPokemon);
+//     });
+// }
 
 //EventListener doesnt work
 
