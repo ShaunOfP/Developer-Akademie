@@ -51,7 +51,7 @@ async function renderPokemonInfo() {
 
         if (pokeTypeLength == 1) {
             pokeContainer.innerHTML += `
-            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j+1})">
+            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j + 1})">
                 <div class="pokemon-card-header">
                     <div>
                         ${allPokemonFixedFirstLetter[j]}
@@ -68,7 +68,7 @@ async function renderPokemonInfo() {
             `;
         } else {
             pokeContainer.innerHTML += `
-            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j+1})">
+            <div id="pokeInfoCard${j}" class="poke-Info-Card" onclick="clicked(${j + 1})">
                 <div class="pokemon-card-header">
                     <div>
                         ${allPokemonFixedFirstLetter[j]}
@@ -125,7 +125,15 @@ async function renderPokemonInfo() {
                 alert("BGC not found!");
         }
     }
-    await gatherAllInformation();
+    pokeContainer.innerHTML += `<button id="loadBTN" class="pokedexBTN poke-Info-Card" onclick="buttonClick()">Load more</button>`;
+    document.getElementById('loadBTN').classList.remove('dp-none');
+}
+
+
+function buttonClick(){
+    howManyPokemon += 20;
+    document.getElementById('loadBTN').classList.add('dp-none');
+    initMain();
 }
 
 

@@ -9,7 +9,7 @@ async function loadPokemon(id) {
     currentPokemon = await response.json();
 
     await getGender();
-    // await gatherAllInformation();
+    await gatherAllInformation();
     await pushEvolutionsToArray();
     renderPokemonHeaderInfo();
 }

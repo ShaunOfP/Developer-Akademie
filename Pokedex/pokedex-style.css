@@ -112,6 +112,10 @@ body {
     background-color: white;
 }
 
+.pokedexBTN{
+    background-color: darkkhaki;
+}
+
 @media(max-width: 414px) {
     .poke-Info-Card{
         height: 200px;
