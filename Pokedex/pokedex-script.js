@@ -1,9 +1,11 @@
-let howManyPokemon = 20; //1010 aktuelle anzahl der Pokemon im Pokedex
+let quantityLoadedPokemon = 0; //1010 aktuelle anzahl der Pokemon im Pokedex
+let quantityOfPokemon = quantityLoadedPokemon + 20;
 let allPokemon = [];
 let allPokemonFixedFirstLetter = [];
 let pokemonData = [];
 let pokeNameColorID = [];
 let pokemonID = 1;
+let buttonID = 0;
 
 async function initMain() {
     await loadAllPokemon();
@@ -14,7 +16,7 @@ async function initMain() {
 
 async function loadAllPokemon() {
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${howManyPokemon}`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${quantityOfPokemon}&offset=${quantityLoadedPokemon}`);
         const data = await response.json();
         allPokemon = pokemonNames = data.results.map((pokemon) => pokemon.name); //Filtert die ergebnisse aus der data Variablen nach den Namen und speichert diese in einem neuen Array (allPokemon)
         return;
@@ -40,9 +42,7 @@ async function renderPokemonInfo() {
 
     await pushColorDataToArray();
 
-    pokeContainer.innerHTML = "";
-
-    for (let j = 0; j < allPokemon.length; j++) {
+    for (let j = quantityLoadedPokemon; j < allPokemon.length; j++) {
         let currentPokemon = allPokemon[j];
         let pokeInfo = await getPokemonInfo(currentPokemon);
         let pokeTypeLength = pokeInfo[0];
@@ -125,14 +125,15 @@ async function renderPokemonInfo() {
                 alert("BGC not found!");
         }
     }
-    pokeContainer.innerHTML += `<button id="loadBTN" class="pokedexBTN poke-Info-Card" onclick="buttonClick()">Load more</button>`;
-    document.getElementById('loadBTN').classList.remove('dp-none');
+    pokeContainer.innerHTML += `<button id="loadBTN${buttonID}" class="pokedexBTN poke-Info-Card" onclick="buttonClick(${buttonID})">Load more</button>`;
 }
 
 
-function buttonClick(){
-    howManyPokemon += 20;
-    document.getElementById('loadBTN').classList.add('dp-none');
+function buttonClick(idNr) {
+    quantityLoadedPokemon += 20;
+    quantityOfPokemon += 20;
+    document.getElementById(`loadBTN${idNr}`).classList.add('dp-none');
+    buttonID++;
     initMain();
 }
 
