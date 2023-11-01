@@ -1,0 +1,70 @@
+body{
+    margin: 5px;
+}
+
+header{
+    color: rgb(102,102,102);
+    background-color: rgb(221,221,221);
+    padding: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.card{
+    text-decoration: none;
+    display: block;
+    border: 5px solid rgb(238,238,238);
+    color: black;
+    width: calc(33% - 10px);
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 5px;
+}
+
+.card:hover{
+    border: 5px solid gray;
+}
+
+.country-population{
+    color: rgb(176,171,165);
+}
+
+#content{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#letters{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.letter-box{
+    height: 30px;
+    width: 30px;
+    background-color: rgb(221,221,221);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.letter-box:hover{
+    cursor: pointer;
+    background-color: rgb(158, 158, 158);;
+}
+
+@media(max-width: 800px){
+    .country-card{
+        width: calc(50% - 10px);
+    }
+}
+
+@media(max-width: 500px){
+    .country-card{
+        width: calc(100% - 10px);
+    }
+}
